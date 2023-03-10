@@ -33,10 +33,10 @@ public partial struct MapTileSpawnerSystem : ISystem
     }
 
     [BurstCompile]
-    private void SpawnTile(ref Tile lastTile, ref Map map, DynamicBuffer<MapTile> mapTiles, ref MapTileConfigsArray configs, DynamicBuffer<MapTilePrefab> tilePrefabs, ref int remainingTilesToSpawn, EntityCommandBuffer entityCommandBuffer)
+    private void SpawnTile(ref TileType lastTile, ref Map map, DynamicBuffer<MapTile> mapTiles, ref MapTileConfigsArray configs, DynamicBuffer<MapTilePrefab> tilePrefabs, ref int remainingTilesToSpawn, EntityCommandBuffer entityCommandBuffer)
     {
         if(lastTile == 0)
-            lastTile = Tile.Grass;
+            lastTile = TileType.Grass;
 
         MapTileConfig? lastTileConfig = configs.GetTileConfig(lastTile);
 

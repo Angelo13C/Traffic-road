@@ -9,7 +9,7 @@ public class MapAuthoring : MonoBehaviour
 	[System.Serializable]
 	private struct TilePrefab
 	{
-		public Tile Tile;
+		public TileType Tile;
 		public GameObject Prefab;
 	}
 	[SerializeField] private TilePrefab[] _tilePrefabs = new TilePrefab[1];
@@ -17,8 +17,8 @@ public class MapAuthoring : MonoBehaviour
 	[System.Serializable]
 	private struct TileConfig
 	{
-		public Tile Tile;
-		public Tile AllowedNextTiles;
+		public TileType Tile;
+		public TileType AllowedNextTiles;
 
 		public int SpawnRateWeight;
 		public int[] ConsecutiveTilesSpawnRateWeight;
