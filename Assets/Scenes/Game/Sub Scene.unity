@@ -352,14 +352,21 @@ MonoBehaviour:
   - Tile: 2
     Prefab: {fileID: 4848502679887864417, guid: 11609b74f05a6d947aea4d6b8100948e,
       type: 3}
+  - Tile: 4
+    Prefab: {fileID: 2102571965828913515, guid: 6d4ea622de556f446ad77f204f4d6f9e,
+      type: 3}
   _tileConfigs:
   - Tile: 1
-    AllowedNextTiles: 2
+    AllowedNextTiles: 6
     SpawnRateWeight: 10
     ConsecutiveTilesSpawnRateWeight: 050000000800000004000000
   - Tile: 2
     AllowedNextTiles: 1
-    SpawnRateWeight: 0
+    SpawnRateWeight: 15
+    ConsecutiveTilesSpawnRateWeight: 05000000080000000a0000000400000003000000
+  - Tile: 4
+    AllowedNextTiles: 1
+    SpawnRateWeight: 4
     ConsecutiveTilesSpawnRateWeight: 05000000080000000a0000000400000003000000
 --- !u!1001 &1856261861
 PrefabInstance:
