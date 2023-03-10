@@ -18,6 +18,34 @@ public struct MapTileConfigs : IComponentData
 public struct MapTileConfigsArray
 {
     public BlobArray<MapTileConfig> Configs;
+    public BlobArray<int> ConsecutiveTilesSpawnRateWeight;
+
+    public MapTileConfig? GetTileConfig(Tile tile)
+    {
+        for(var i = 0; i < Configs.Length; i++)
+        {
+            if(Configs[i].Tile == tile)
+            {
+                return Configs[i];
+            }
+        }
+        return null;
+    }
+
+    [BurstCompile]
+    public int GetRandomConsecutiveTilesCount(MapTileConfig config, ref Random rng)
+    {
+        var randomValue = rng.NextInt(config.TotalConsecutiveTilesSpawnRateWeights);
+        var offset = config.ConsecutiveTilesSpawnRateWeightStartIndex;
+        for(var i = 0; i < config.ConsecutiveTilesSpawnRateWeightEndIndex - offset; i++)
+        {
+            if(randomValue < ConsecutiveTilesSpawnRateWeight[offset + i])
+                return i + 1;
+
+            randomValue -= ConsecutiveTilesSpawnRateWeight[offset + i];
+        }
+        return -1;
+    }
 }
 
 [BurstCompile]
@@ -27,22 +55,9 @@ public struct MapTileConfig
     public Tile AllowedNextTiles;
 
     public int SpawnRateWeight;
-    public BlobArray<int> ConsecutiveTilesSpawnRateWeight;
-    [UnityEngine.HideInInspector] public int _totalConsecutiveTilesSpawnRateWeights;
-
-    [BurstCompile]
-    public int GetRandomConsecutiveTilesCount(ref Random rng)
-    {
-        var randomValue = rng.NextInt(_totalConsecutiveTilesSpawnRateWeights);
-        for(var i = 0; i < ConsecutiveTilesSpawnRateWeight.Length; i++)
-        {
-            if(randomValue < ConsecutiveTilesSpawnRateWeight[i])
-                return i + 1;
-
-            randomValue -= ConsecutiveTilesSpawnRateWeight[i];
-        }
-        return -1;
-    }
+    public int ConsecutiveTilesSpawnRateWeightStartIndex;
+    public int ConsecutiveTilesSpawnRateWeightEndIndex;
+    public int TotalConsecutiveTilesSpawnRateWeights;
 
     [BurstCompile]
     public Tile GetRandomNextTile(ref Random rng)

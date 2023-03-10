@@ -4,6 +4,8 @@ using Unity.Collections;
 
 public class MapAuthoring : MonoBehaviour
 {
+	[SerializeField] [Min(1)] private int _seed = 1;
+
 	[System.Serializable]
 	private struct TilePrefab
 	{
@@ -28,10 +30,12 @@ public class MapAuthoring : MonoBehaviour
 		public override void Bake(MapAuthoring authoring)
 		{
 			var map = new Map {
-
+				Rng = new Unity.Mathematics.Random((uint) authoring._seed),
 			};
-
 			AddComponent(map);
+
+			var mapTiles = AddBuffer<MapTile>();
+			mapTiles.EnsureCapacity(500);
 
 			var mapTilePrefabs = AddBuffer<MapTilePrefab>();
 			mapTilePrefabs.ResizeUninitialized(authoring._tilePrefabs.Length);
@@ -49,14 +53,24 @@ public class MapAuthoring : MonoBehaviour
 				ref var tilesBlob = ref builder.ConstructRoot<MapTileConfigsArray>();
 				
 				var configsBlob = builder.Allocate(ref tilesBlob.Configs, authoring._tileConfigs.Length);
+				
+				var consecutiveTilesArraySize = 0;
+				for(var i = 0; i < authoring._tileConfigs.Length; i++)
+				{
+					var tileConfig = authoring._tileConfigs[i];
+					for(var j = 0; j < tileConfig.ConsecutiveTilesSpawnRateWeight.Length; j++)
+						consecutiveTilesArraySize += tileConfig.ConsecutiveTilesSpawnRateWeight[j];
+				}
+
+				var consecutiveTiles = builder.Allocate(ref tilesBlob.ConsecutiveTilesSpawnRateWeight, consecutiveTilesArraySize);
 				for(var i = 0; i < configsBlob.Length; i++)
 				{
 					var authoringTile = authoring._tileConfigs[i];
-					var consecutiveTiles = builder.Allocate(ref configsBlob[i].ConsecutiveTilesSpawnRateWeight, authoringTile.ConsecutiveTilesSpawnRateWeight.Length);
 					var totalWeightsSum = 0;
-					for(var j = 0; j < consecutiveTiles.Length; j++)
+					var lastIndex = i == 0 ? 0 : configsBlob[i - 1].ConsecutiveTilesSpawnRateWeightEndIndex;
+					for(var j = 0; j < authoring._tileConfigs[i].ConsecutiveTilesSpawnRateWeight.Length; j++)
 					{
-						consecutiveTiles[j] = authoringTile.ConsecutiveTilesSpawnRateWeight[j];
+						consecutiveTiles[lastIndex + j] = authoringTile.ConsecutiveTilesSpawnRateWeight[j];
 						totalWeightsSum += consecutiveTiles[j];
 					}
 
@@ -64,7 +78,9 @@ public class MapAuthoring : MonoBehaviour
 					mapTileConfig.Tile = authoringTile.Tile;
 					mapTileConfig.AllowedNextTiles = authoringTile.AllowedNextTiles;
 					mapTileConfig.SpawnRateWeight = authoringTile.SpawnRateWeight;
-					mapTileConfig._totalConsecutiveTilesSpawnRateWeights = totalWeightsSum;
+					mapTileConfig.TotalConsecutiveTilesSpawnRateWeights = totalWeightsSum;
+					mapTileConfig.ConsecutiveTilesSpawnRateWeightStartIndex = lastIndex;
+					mapTileConfig.ConsecutiveTilesSpawnRateWeightEndIndex = lastIndex + authoring._tileConfigs[i].ConsecutiveTilesSpawnRateWeight.Length;
 				}
 
 				var blobAsset = builder.CreateBlobAssetReference<MapTileConfigsArray>(Allocator.Persistent);
