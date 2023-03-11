@@ -389,8 +389,8 @@ MonoBehaviour:
       type: 3}
     Weight: 1
   _distanceRangeBetweenObstacles:
-    x: 60
-    y: 80
+    x: 20
+    y: 50
   _roadDynamicObstacles:
   - Prefab: {fileID: 1490995594025503570, guid: 9badf1cdd20c47c49b7587005757d959,
       type: 3}
