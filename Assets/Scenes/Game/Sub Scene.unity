@@ -387,6 +387,12 @@ MonoBehaviour:
   _grassStaticObstacles:
   - Prefab: {fileID: 2652995609030960630, guid: e5c666a4d47badb408502cc4ff991d5e,
       type: 3}
+    Weight: 2
+  - Prefab: {fileID: 1920378602155034601, guid: 40e146d9d08a9914384f1895377e2fe7,
+      type: 3}
+    Weight: 4
+  - Prefab: {fileID: 9202183010522532550, guid: 3c0e18d72338330469ef0b2551eee3b0,
+      type: 3}
     Weight: 1
   _distanceRangeBetweenObstacles:
     x: 20
