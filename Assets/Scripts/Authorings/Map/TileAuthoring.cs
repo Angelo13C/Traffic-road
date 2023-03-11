@@ -19,7 +19,7 @@ public class TileAuthoring : MonoBehaviour
 			{
 				AddComponent(new RoadTile {
 					JustSpawned = true,
-					LastSpawnedDynamicObstacle = Entity.Null
+					LastSpawnedDynamicObstacle = Entity.Null,
 				});
 			}
 			else if(authoring._type == TileType.Water)

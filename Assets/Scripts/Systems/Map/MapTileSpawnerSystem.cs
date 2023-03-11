@@ -10,6 +10,7 @@ public partial struct MapTileSpawnerSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        var rng = new Random(1 + (uint) ((SystemAPI.Time.ElapsedTime + SystemAPI.Time.DeltaTime) * 10000));
         foreach(var (mapViewer, mapViewerTransform) in SystemAPI.Query<MapViewer, LocalTransform>())
         {
             var mapViewerTilePosition = (int) math.floor(mapViewerTransform.Position.z / MapTilePrefab.TILE_WIDTH);
@@ -26,7 +27,7 @@ public partial struct MapTileSpawnerSystem : ISystem
                     var lastTile = MapTile.GetLastTile(mapTiles);
                     while(remainingTilesToSpawn > 0)
                     {
-                        SpawnTile(ref lastTile, ref map.ValueRW, mapTiles, ref configs, tilePrefabs, ref remainingTilesToSpawn, entityCommandBuffer);
+                        SpawnTile(ref lastTile, ref map.ValueRW, mapTiles, ref configs, tilePrefabs, ref remainingTilesToSpawn, ref rng, entityCommandBuffer);
                     }
                 }
             }
@@ -34,7 +35,7 @@ public partial struct MapTileSpawnerSystem : ISystem
     }
 
     [BurstCompile]
-    private void SpawnTile(ref TileType lastTile, ref Map map, DynamicBuffer<MapTile> mapTiles, ref MapTileConfigsArray configs, DynamicBuffer<MapTilePrefab> tilePrefabs, ref int remainingTilesToSpawn, EntityCommandBuffer entityCommandBuffer)
+    private void SpawnTile(ref TileType lastTile, ref Map map, DynamicBuffer<MapTile> mapTiles, ref MapTileConfigsArray configs, DynamicBuffer<MapTilePrefab> tilePrefabs, ref int remainingTilesToSpawn, ref Random rng, EntityCommandBuffer entityCommandBuffer)
     {
         if(lastTile == 0)
             lastTile = TileType.Grass;
@@ -63,6 +64,14 @@ public partial struct MapTileSpawnerSystem : ISystem
             entityCommandBuffer.SetComponent(spawnedTile, LocalTransform.FromMatrix(transformMatrix));
             entityCommandBuffer.SetComponent(spawnedTile, WorldTransform.FromMatrix(transformMatrix));
             entityCommandBuffer.SetComponent(spawnedTile, new LocalToWorld { Value = transformMatrix });
+            if(randomTile == TileType.Road)
+            {
+                entityCommandBuffer.SetComponent(spawnedTile, new RoadTile {
+                    JustSpawned = true,
+                    LastSpawnedDynamicObstacle = Entity.Null,
+                    Speed = rng.NextFloat(20, 30) * (rng.NextBool() ? 1 : -1)
+                });
+            }
         }
     }
 }
