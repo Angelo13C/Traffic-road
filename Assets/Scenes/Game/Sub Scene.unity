@@ -309,6 +309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1626544067}
   - component: {fileID: 1626544068}
+  - component: {fileID: 1626544069}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -368,6 +369,28 @@ MonoBehaviour:
     AllowedNextTiles: 1
     SpawnRateWeight: 4
     ConsecutiveTilesSpawnRateWeight: 05000000080000000a0000000400000003000000
+--- !u!114 &1626544069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626544066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f965266ee03c1f94f800a1ab06574689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _grassObstaclesCountRange:
+    x: 10
+    y: 25
+  _grassStaticObstacles:
+  - Prefab: {fileID: 2652995609030960630, guid: e5c666a4d47badb408502cc4ff991d5e,
+      type: 3}
+    Weight: 1
+  _roadDynamicObstacles: []
+  _waterStaticObstacles: []
+  _waterDynamicObstacles: []
 --- !u!1001 &1856261861
 PrefabInstance:
   m_ObjectHideFlags: 0

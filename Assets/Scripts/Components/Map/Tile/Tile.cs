@@ -15,6 +15,7 @@ public struct GrassTile : IComponentData
 
 public struct RoadTile : IComponentData
 {
+    public bool JustSpawned;
     public Entity LastSpawnedDynamicObstacle;
 }
 

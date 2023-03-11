@@ -22,6 +22,7 @@ public struct MapTilePrefab : IBufferElementData
 
     public const float TILE_WIDTH = 3;
     public const float TILE_LENGTH = 200;
+    public const int TILE_SLOTS_COUNT = (int) (TILE_LENGTH / TILE_WIDTH);
 
     public static MapTilePrefab? GetTilePrefab(DynamicBuffer<MapTilePrefab> prefabs, TileType tile)
     {

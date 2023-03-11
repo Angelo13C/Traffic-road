@@ -18,6 +18,7 @@ public class TileAuthoring : MonoBehaviour
 			else if(authoring._type == TileType.Road)
 			{
 				AddComponent(new RoadTile {
+					JustSpawned = true,
 					LastSpawnedDynamicObstacle = Entity.Null
 				});
 			}
