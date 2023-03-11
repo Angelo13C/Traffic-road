@@ -11,6 +11,8 @@ public enum TileType
 public struct GrassTile : IComponentData
 {
     public bool JustSpawned;
+
+    public const float HEIGHT = 0.5f;
 }
 
 public struct RoadTile : IComponentData

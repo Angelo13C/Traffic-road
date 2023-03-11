@@ -18,7 +18,7 @@ public partial struct MapStaticObstaclesSpawnerSystem : ISystem
                 if(grassTile.ValueRO.JustSpawned)
                 {
                     grassTile.ValueRW.JustSpawned = false;
-                    SpawnObstacles(grassObstaclesConfig, grassStaticObstacles, ref rng, state.EntityManager, transform.Position);
+                    SpawnObstacles(grassObstaclesConfig, grassStaticObstacles, ref rng, state.EntityManager, new float3(0, GrassTile.HEIGHT, transform.Position.z));
                 }
             }
         }
