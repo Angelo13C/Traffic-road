@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
+[UpdateBefore(typeof(MapTileSpawnerSystem))]
 [BurstCompile]
 public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
 {
@@ -39,7 +40,7 @@ public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
     private Entity SpawnObstacle<T>(DynamicBuffer<T> obstacles, int totalWeight, EntityManager entityManager, float3 tilePosition, ref Random rng)
         where T : unmanaged, ObstaclesBuffer
     {
-        var spawnPosition = MapTilePrefab.TILE_LENGTH / 2 - 8;
+        var spawnPosition = MapTilePrefab.TILE_LENGTH / 2;
         var randomValue = rng.NextInt(totalWeight);
         var randomPrefab = Entity.Null;
         for(var j = 0; j < obstacles.Length; j++)
@@ -55,7 +56,7 @@ public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
 
         var spawnedObstacle = entityManager.Instantiate(randomPrefab);
         entityManager.SetComponentData(spawnedObstacle, new LocalTransform {
-            Position = new float3(spawnPosition, tilePosition.y + 1, tilePosition.z),
+            Position = new float3(spawnPosition, tilePosition.y, tilePosition.z),
             Rotation = quaternion.RotateY(math.radians(-90)),
             Scale = 1
         });
