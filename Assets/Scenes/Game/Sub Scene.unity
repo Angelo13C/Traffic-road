@@ -627,6 +627,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2674214978767437844, guid: e95be3f6ef9cc8243994bdcda968a0e5,
         type: 3}
+      propertyPath: Character.JumpSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2674214978767437844, guid: e95be3f6ef9cc8243994bdcda968a0e5,
+        type: 3}
+      propertyPath: Character.AirMaxSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2674214978767437844, guid: e95be3f6ef9cc8243994bdcda968a0e5,
+        type: 3}
+      propertyPath: Character.GroundMaxSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2674214978767437844, guid: e95be3f6ef9cc8243994bdcda968a0e5,
+        type: 3}
       propertyPath: CharacterProperties.Mass
       value: 70
       objectReference: {fileID: 0}
