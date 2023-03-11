@@ -16,22 +16,17 @@ public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
         {
             foreach(var (roadTile, transform) in SystemAPI.Query<RefRW<RoadTile>, LocalTransform>())
             {
-                var speedDirection = math.sign(roadTile.ValueRO.Speed);
-                if(roadTile.ValueRO.LastSpawnedDynamicObstacle == Entity.Null)
-                {
-                    var spawnPosition = speedDirection * MapTilePrefab.TILE_LENGTH / 2;
-                    roadTile.ValueRW.NextXPositionToSpawnObstacle = spawnPosition - speedDirection * rng.NextFloat(roadObstaclesConfig.DistanceRangeBetweenObstacles.x, roadObstaclesConfig.DistanceRangeBetweenObstacles.y);
-                    roadTile.ValueRW.LastSpawnedDynamicObstacle = SpawnObstacle(roadDynamicObstacles, roadObstaclesConfig.TotalWeight, state.EntityManager, transform.Position, roadTile.ValueRO.Speed, ref rng);
-                }
-                else
+                var shouldSpawn = roadTile.ValueRO.LastSpawnedDynamicObstacle == Entity.Null;
+                if(!shouldSpawn)
                 {
                     var lastSpawnedObstacleTransform = transformLookup.GetRefRO(roadTile.ValueRO.LastSpawnedDynamicObstacle);
-                    if(math.abs(lastSpawnedObstacleTransform.ValueRO.Position.x) <= math.abs(roadTile.ValueRO.NextXPositionToSpawnObstacle))
-                    {
-                        var spawnPosition = speedDirection * MapTilePrefab.TILE_LENGTH / 2;
-                        roadTile.ValueRW.NextXPositionToSpawnObstacle = spawnPosition - speedDirection * rng.NextFloat(roadObstaclesConfig.DistanceRangeBetweenObstacles.x, roadObstaclesConfig.DistanceRangeBetweenObstacles.y);
-                        roadTile.ValueRW.LastSpawnedDynamicObstacle = SpawnObstacle(roadDynamicObstacles, roadObstaclesConfig.TotalWeight, state.EntityManager, transform.Position, roadTile.ValueRO.Speed, ref rng);
-                    }
+                    shouldSpawn = math.abs(lastSpawnedObstacleTransform.ValueRO.Position.x) <= roadTile.ValueRO.NextAbsXPositionToSpawnObstacle;
+                }
+                var speedDirection = math.sign(roadTile.ValueRO.Speed);
+                if(shouldSpawn)
+                {
+                    roadTile.ValueRW.NextAbsXPositionToSpawnObstacle = MapTilePrefab.TILE_LENGTH / 2 - rng.NextFloat(roadObstaclesConfig.DistanceRangeBetweenObstacles.x, roadObstaclesConfig.DistanceRangeBetweenObstacles.y);
+                    roadTile.ValueRW.LastSpawnedDynamicObstacle = SpawnObstacle(roadDynamicObstacles, roadObstaclesConfig.TotalWeight, state.EntityManager, transform.Position, roadTile.ValueRO.Speed, ref rng);
                 }
             }
         }
