@@ -19,6 +19,12 @@ public struct GrassObstaclesConfig : IComponentData, ObstaclesConfig
     public int TotalWeight { get; set; }
 }
 
+public struct RoadObstaclesConfig : IComponentData
+{
+    public int TotalWeight;
+    public float2 DistanceRangeBetweenObstacles;
+}
+
 [InternalBufferCapacity(0)]
 public struct GrassStaticObstacles : IBufferElementData, ObstaclesBuffer
 {

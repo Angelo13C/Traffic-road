@@ -388,7 +388,13 @@ MonoBehaviour:
   - Prefab: {fileID: 2652995609030960630, guid: e5c666a4d47badb408502cc4ff991d5e,
       type: 3}
     Weight: 1
-  _roadDynamicObstacles: []
+  _distanceRangeBetweenObstacles:
+    x: 60
+    y: 80
+  _roadDynamicObstacles:
+  - Prefab: {fileID: 1490995594025503570, guid: 9badf1cdd20c47c49b7587005757d959,
+      type: 3}
+    Weight: 1
   _waterStaticObstacles: []
   _waterDynamicObstacles: []
 --- !u!1001 &1856261861
