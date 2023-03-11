@@ -645,6 +645,11 @@ PrefabInstance:
       propertyPath: CharacterProperties.Mass
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 2674214978767437844, guid: e95be3f6ef9cc8243994bdcda968a0e5,
+        type: 3}
+      propertyPath: Character.StepAndSlopeHandling.StepHandling
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
