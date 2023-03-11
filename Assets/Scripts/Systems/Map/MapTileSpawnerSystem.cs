@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
+[UpdateBefore(typeof(TransformSystemGroup))]
 [BurstCompile]
 public partial struct MapTileSpawnerSystem : ISystem
 {
@@ -58,11 +59,10 @@ public partial struct MapTileSpawnerSystem : ISystem
             var tilePosition = new float3(0, 0, tileIndex * MapTilePrefab.TILE_WIDTH);
             
             var spawnedTile = entityCommandBuffer.Instantiate(randomTilePrefab.Value.Prefab);
-            entityCommandBuffer.SetComponent(spawnedTile, new LocalTransform {
-                Position = tilePosition,
-                Rotation = quaternion.identity,
-                Scale = 1
-            });
+            var transformMatrix = float4x4.Translate(tilePosition);
+            entityCommandBuffer.SetComponent(spawnedTile, LocalTransform.FromMatrix(transformMatrix));
+            entityCommandBuffer.SetComponent(spawnedTile, WorldTransform.FromMatrix(transformMatrix));
+            entityCommandBuffer.SetComponent(spawnedTile, new LocalToWorld { Value = transformMatrix });
         }
     }
 }

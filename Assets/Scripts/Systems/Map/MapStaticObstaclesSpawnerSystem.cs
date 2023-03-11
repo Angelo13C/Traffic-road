@@ -54,11 +54,10 @@ public partial struct MapStaticObstaclesSpawnerSystem : ISystem
 
             var spawnTileXPosition = spawnTileIndex * MapTilePrefab.TILE_WIDTH - MapTilePrefab.TILE_LENGTH / 2;
             var spawnedObstacle = entityManager.Instantiate(randomPrefab);
-            entityManager.SetComponentData(spawnedObstacle, new LocalTransform {
-                Position = new float3(spawnTileXPosition, tilePosition.y, tilePosition.z),
-                Rotation = quaternion.identity,
-                Scale = 1
-            });
+            var transformMatrix = float4x4.TRS(new float3(spawnTileXPosition, tilePosition.y, tilePosition.z), quaternion.identity, new float3(1, 1, 1));
+            entityManager.SetComponentData(spawnedObstacle, LocalTransform.FromMatrix(transformMatrix));
+            entityManager.SetComponentData(spawnedObstacle, WorldTransform.FromMatrix(transformMatrix));
+            entityManager.SetComponentData(spawnedObstacle, new LocalToWorld { Value = transformMatrix });
         }
 
         occupiedTiles.Dispose();
