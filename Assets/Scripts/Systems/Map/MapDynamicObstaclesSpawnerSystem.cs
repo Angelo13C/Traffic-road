@@ -33,25 +33,41 @@ public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
     private void SpawnObstacleIfNecessary<T, B>(ComponentLookup<LocalTransform> transformLookup, ref T tile, DynamicBuffer<B> obstacles, int totalWeight, float2 distanceRangeBetweenObstacles, EntityManager entityManager, float3 tilePosition, ref Random rng)
         where T : unmanaged, TileWithDynamicObstacles where B : unmanaged, ObstaclesBuffer
     {
-        var shouldSpawn = tile.LastSpawnedDynamicObstacle == Entity.Null;
-        if(!shouldSpawn)
+        if(tile.JustSpawned)
         {
-            if(transformLookup.TryGetComponent(tile.LastSpawnedDynamicObstacle, out var lastSpawnedObstacleTransform))
-                shouldSpawn = math.abs(lastSpawnedObstacleTransform.Position.x) <= tile.NextAbsXPositionToSpawnObstacle;
+            var remainingSpace = MapTilePrefab.TILE_LENGTH;
+            var speedSign = math.sign(tile.Speed);
+            while(remainingSpace > distanceRangeBetweenObstacles.y)
+            {
+                var randomOffset = rng.NextFloat(distanceRangeBetweenObstacles.x, distanceRangeBetweenObstacles.y);
+                tilePosition.x -= speedSign * randomOffset;
+                SpawnObstacle(obstacles, totalWeight, entityManager, tilePosition, ref tile, ref rng, distanceRangeBetweenObstacles);
+                remainingSpace -= randomOffset;
+            }
         }
-        if(shouldSpawn)
+        else
         {
-            tile.NextAbsXPositionToSpawnObstacle = MapTilePrefab.TILE_LENGTH / 2 - rng.NextFloat(distanceRangeBetweenObstacles.x, distanceRangeBetweenObstacles.y);
-            tile.LastSpawnedDynamicObstacle = SpawnObstacle(obstacles, totalWeight, entityManager, tilePosition, tile.Speed, ref rng);
+            var shouldSpawn = tile.LastSpawnedDynamicObstacle == Entity.Null;
+            if(!shouldSpawn)
+            {
+                if(transformLookup.TryGetComponent(tile.LastSpawnedDynamicObstacle, out var lastSpawnedObstacleTransform))
+                    shouldSpawn = math.abs(lastSpawnedObstacleTransform.Position.x) <= tile.NextAbsXPositionToSpawnObstacle;
+                else
+                    shouldSpawn = true;
+            }
+            if(shouldSpawn)
+            {
+                SpawnObstacle(obstacles, totalWeight, entityManager, tilePosition, ref tile, ref rng, distanceRangeBetweenObstacles);
+            }
         }
     }
 
     [BurstCompile]
-    private Entity SpawnObstacle<T>(DynamicBuffer<T> obstacles, int totalWeight, EntityManager entityManager, float3 tilePosition, float speed, ref Random rng)
-        where T : unmanaged, ObstaclesBuffer
+    private void SpawnObstacle<T, B>(DynamicBuffer<B> obstacles, int totalWeight, EntityManager entityManager, float3 tilePosition, ref T tile, ref Random rng, float2 distanceRangeBetweenObstacles)
+        where T : unmanaged, TileWithDynamicObstacles where B : unmanaged, ObstaclesBuffer
     {
-        var angle = math.radians(-90) * math.sign(speed);
-        var spawnPosition = math.sign(speed) * MapTilePrefab.TILE_LENGTH / 2;
+        var angle = math.radians(-90) * math.sign(tile.Speed);
+        var spawnPosition = math.sign(tile.Speed) * MapTilePrefab.TILE_LENGTH / 2;
         var randomValue = rng.NextInt(totalWeight);
         var randomPrefab = Entity.Null;
         for(var j = 0; j < obstacles.Length; j++)
@@ -67,13 +83,15 @@ public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
 
         var spawnedObstacle = entityManager.Instantiate(randomPrefab);
         entityManager.SetComponentData(spawnedObstacle, new LocalTransform {
-            Position = new float3(spawnPosition, tilePosition.y, tilePosition.z),
+            Position = new float3(spawnPosition + tilePosition.x, tilePosition.y, tilePosition.z),
             Rotation = quaternion.RotateY(angle),
             Scale = 1
         });
         entityManager.SetComponentData(spawnedObstacle, new VehicleMover {
-            Speed = speed
+            Speed = tile.Speed
         });
-        return spawnedObstacle;
+        
+        tile.NextAbsXPositionToSpawnObstacle = MapTilePrefab.TILE_LENGTH / 2 - rng.NextFloat(distanceRangeBetweenObstacles.x, distanceRangeBetweenObstacles.y);
+        tile.LastSpawnedDynamicObstacle = spawnedObstacle;
     }
 }

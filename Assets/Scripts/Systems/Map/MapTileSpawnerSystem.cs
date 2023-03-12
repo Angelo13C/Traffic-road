@@ -10,6 +10,13 @@ public partial struct MapTileSpawnerSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        foreach(var grassTile in SystemAPI.Query<RefRW<GrassTile>>())
+            grassTile.ValueRW.JustSpawned = false;
+        foreach(var roadTile in SystemAPI.Query<RefRW<RoadTile>>())
+            roadTile.ValueRW.JustSpawned = false;
+        foreach(var waterTile in SystemAPI.Query<RefRW<WaterTile>>())
+            waterTile.ValueRW.JustSpawned = false;
+
         var rng = new Random(1 + (uint) ((SystemAPI.Time.ElapsedTime + SystemAPI.Time.DeltaTime) * 10000));
         foreach(var (mapViewer, mapViewerTransform) in SystemAPI.Query<MapViewer, LocalTransform>())
         {
@@ -78,6 +85,12 @@ public partial struct MapTileSpawnerSystem : ISystem
                     JustSpawned = true,
                     LastSpawnedDynamicObstacle = Entity.Null,
                     Speed = rng.NextFloat(3, 5) * (rng.NextBool() ? 1 : -1)
+                });
+            }
+            else if(randomTile == TileType.Grass)
+            {
+                entityCommandBuffer.SetComponent(spawnedTile, new GrassTile {
+                    JustSpawned = true,
                 });
             }
         }

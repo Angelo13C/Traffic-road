@@ -8,31 +8,36 @@ public enum TileType
     Water = (1 << 2)
 }
 
-public struct GrassTile : IComponentData
+public interface Tile : IComponentData
 {
-    public bool JustSpawned;
+    public bool JustSpawned { get; set; }
+}
+
+public struct GrassTile : IComponentData, Tile
+{
+    public bool JustSpawned { get; set; }
 
     public const float HEIGHT = 0.5f;
 }
 
-public interface TileWithDynamicObstacles : IComponentData
+public interface TileWithDynamicObstacles : Tile
 {
     public float Speed { get; set; }
     public Entity LastSpawnedDynamicObstacle { get; set; }
     public float NextAbsXPositionToSpawnObstacle { get; set; }
 }
 
-public struct RoadTile : TileWithDynamicObstacles, IComponentData
+public struct RoadTile : TileWithDynamicObstacles, IComponentData, Tile
 {
-    public bool JustSpawned;
+    public bool JustSpawned { get; set; }
     public float Speed { get; set; }
     public Entity LastSpawnedDynamicObstacle { get; set; }
     public float NextAbsXPositionToSpawnObstacle { get; set; }
 }
 
-public struct WaterTile : TileWithDynamicObstacles, IComponentData
+public struct WaterTile : TileWithDynamicObstacles, IComponentData, Tile
 {
-    public bool JustSpawned;
+    public bool JustSpawned { get; set; }
     public float Speed { get; set; }
     public Entity LastSpawnedDynamicObstacle { get; set; }
     public float NextAbsXPositionToSpawnObstacle { get; set; }
