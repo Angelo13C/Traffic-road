@@ -16,19 +16,25 @@ public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
         {
             foreach(var (roadTile, transform) in SystemAPI.Query<RefRW<RoadTile>, LocalTransform>())
             {
-                var shouldSpawn = roadTile.ValueRO.LastSpawnedDynamicObstacle == Entity.Null;
-                if(!shouldSpawn)
-                {
-                    var lastSpawnedObstacleTransform = transformLookup.GetRefRO(roadTile.ValueRO.LastSpawnedDynamicObstacle);
-                    shouldSpawn = math.abs(lastSpawnedObstacleTransform.ValueRO.Position.x) <= roadTile.ValueRO.NextAbsXPositionToSpawnObstacle;
-                }
-                var speedDirection = math.sign(roadTile.ValueRO.Speed);
-                if(shouldSpawn)
-                {
-                    roadTile.ValueRW.NextAbsXPositionToSpawnObstacle = MapTilePrefab.TILE_LENGTH / 2 - rng.NextFloat(roadObstaclesConfig.DistanceRangeBetweenObstacles.x, roadObstaclesConfig.DistanceRangeBetweenObstacles.y);
-                    roadTile.ValueRW.LastSpawnedDynamicObstacle = SpawnObstacle(roadDynamicObstacles, roadObstaclesConfig.TotalWeight, state.EntityManager, transform.Position, roadTile.ValueRO.Speed, ref rng);
-                }
+                SpawnObstacleIfNecessary<RoadTile, RoadDynamicObstacles>(transformLookup, ref roadTile.ValueRW, roadDynamicObstacles, roadObstaclesConfig.TotalWeight, roadObstaclesConfig.DistanceRangeBetweenObstacles, state.EntityManager, transform.Position, ref rng);
             }
+        }
+    }
+
+    [BurstCompile]
+    private void SpawnObstacleIfNecessary<T, B>(ComponentLookup<LocalTransform> transformLookup, ref T tile, DynamicBuffer<B> obstacles, int totalWeight, float2 distanceRangeBetweenObstacles, EntityManager entityManager, float3 tilePosition, ref Random rng)
+        where T : unmanaged, TileWithDynamicObstacles where B : unmanaged, ObstaclesBuffer
+    {
+        var shouldSpawn = tile.LastSpawnedDynamicObstacle == Entity.Null;
+        if(!shouldSpawn)
+        {
+            var lastSpawnedObstacleTransform = transformLookup.GetRefRO(tile.LastSpawnedDynamicObstacle);
+            shouldSpawn = math.abs(lastSpawnedObstacleTransform.ValueRO.Position.x) <= tile.NextAbsXPositionToSpawnObstacle;
+        }
+        if(shouldSpawn)
+        {
+            tile.NextAbsXPositionToSpawnObstacle = MapTilePrefab.TILE_LENGTH / 2 - rng.NextFloat(distanceRangeBetweenObstacles.x, distanceRangeBetweenObstacles.y);
+            tile.LastSpawnedDynamicObstacle = SpawnObstacle(obstacles, totalWeight, entityManager, tilePosition, tile.Speed, ref rng);
         }
     }
 

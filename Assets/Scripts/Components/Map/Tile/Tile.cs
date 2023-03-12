@@ -15,16 +15,25 @@ public struct GrassTile : IComponentData
     public const float HEIGHT = 0.5f;
 }
 
-public struct RoadTile : IComponentData
+public interface TileWithDynamicObstacles : IComponentData
 {
-    public bool JustSpawned;
-    public float Speed;
-    public Entity LastSpawnedDynamicObstacle;
-    public float NextAbsXPositionToSpawnObstacle;
+    public float Speed { get; set; }
+    public Entity LastSpawnedDynamicObstacle { get; set; }
+    public float NextAbsXPositionToSpawnObstacle { get; set; }
 }
 
-public struct WaterTile : IComponentData
+public struct RoadTile : TileWithDynamicObstacles, IComponentData
 {
     public bool JustSpawned;
-    public Entity LastSpawnedDynamicObstacle;
+    public float Speed { get; set; }
+    public Entity LastSpawnedDynamicObstacle { get; set; }
+    public float NextAbsXPositionToSpawnObstacle { get; set; }
+}
+
+public struct WaterTile : TileWithDynamicObstacles, IComponentData
+{
+    public bool JustSpawned;
+    public float Speed { get; set; }
+    public Entity LastSpawnedDynamicObstacle { get; set; }
+    public float NextAbsXPositionToSpawnObstacle { get; set; }
 }
