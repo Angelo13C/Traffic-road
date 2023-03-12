@@ -72,6 +72,14 @@ public partial struct MapTileSpawnerSystem : ISystem
                     Speed = rng.NextFloat(20, 30) * (rng.NextBool() ? 1 : -1)
                 });
             }
+            else if(randomTile == TileType.Water)
+            {
+                entityCommandBuffer.SetComponent(spawnedTile, new WaterTile {
+                    JustSpawned = true,
+                    LastSpawnedDynamicObstacle = Entity.Null,
+                    Speed = rng.NextFloat(3, 5) * (rng.NextBool() ? 1 : -1)
+                });
+            }
         }
     }
 }

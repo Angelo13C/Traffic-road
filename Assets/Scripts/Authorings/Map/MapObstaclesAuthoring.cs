@@ -16,10 +16,11 @@ public class MapObstaclesAuthoring : MonoBehaviour
     [SerializeField] private Obstacle[] _grassStaticObstacles = new Obstacle[1];
 
     [Header("Road")]
-    [SerializeField] private float2 _distanceRangeBetweenObstacles = new float2(5, 20);
+    [SerializeField] private float2 _distanceRangeBetweenRoadObstacles = new float2(5, 20);
     [SerializeField] private Obstacle[] _roadDynamicObstacles = new Obstacle[1];
 
     [Header("Water")]
+    [SerializeField] private float2 _distanceRangeBetweenWaterObstacles = new float2(5, 15);
     [SerializeField] private Obstacle[] _waterStaticObstacles = new Obstacle[1];
     [SerializeField] private Obstacle[] _waterDynamicObstacles = new Obstacle[1];
 
@@ -36,11 +37,15 @@ public class MapObstaclesAuthoring : MonoBehaviour
             AddObstaclesBuffer<RoadDynamicObstacles>(authoring._roadDynamicObstacles, out totalWeight);
             AddComponent(new RoadObstaclesConfig {
                 TotalWeight = totalWeight,
-                DistanceRangeBetweenObstacles = authoring._distanceRangeBetweenObstacles
+                DistanceRangeBetweenObstacles = authoring._distanceRangeBetweenRoadObstacles
             });
 
             AddObstaclesBuffer<WaterStaticObstacles>(authoring._waterStaticObstacles, out totalWeight);
             AddObstaclesBuffer<WaterDynamicObstacles>(authoring._waterDynamicObstacles, out totalWeight);
+            AddComponent(new WaterObstaclesConfig {
+                TotalWeight = totalWeight,
+                DistanceRangeBetweenObstacles = authoring._distanceRangeBetweenWaterObstacles
+            });
         }
 
         private void AddObstaclesBuffer<T>(Obstacle[] obstacles, out int totalWeight)

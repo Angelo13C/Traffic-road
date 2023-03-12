@@ -19,6 +19,14 @@ public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
                 SpawnObstacleIfNecessary<RoadTile, RoadDynamicObstacles>(transformLookup, ref roadTile.ValueRW, roadDynamicObstacles, roadObstaclesConfig.TotalWeight, roadObstaclesConfig.DistanceRangeBetweenObstacles, state.EntityManager, transform.Position, ref rng);
             }
         }
+        
+        foreach(var (waterObstaclesConfig, waterDynamicObstacles) in SystemAPI.Query<WaterObstaclesConfig, DynamicBuffer<WaterDynamicObstacles>>())
+        {
+            foreach(var (waterTile, transform) in SystemAPI.Query<RefRW<WaterTile>, LocalTransform>())
+            {
+                SpawnObstacleIfNecessary<WaterTile, WaterDynamicObstacles>(transformLookup, ref waterTile.ValueRW, waterDynamicObstacles, waterObstaclesConfig.TotalWeight, waterObstaclesConfig.DistanceRangeBetweenObstacles, state.EntityManager, transform.Position, ref rng);
+            }
+        }
     }
 
     [BurstCompile]
@@ -28,8 +36,8 @@ public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
         var shouldSpawn = tile.LastSpawnedDynamicObstacle == Entity.Null;
         if(!shouldSpawn)
         {
-            var lastSpawnedObstacleTransform = transformLookup.GetRefRO(tile.LastSpawnedDynamicObstacle);
-            shouldSpawn = math.abs(lastSpawnedObstacleTransform.ValueRO.Position.x) <= tile.NextAbsXPositionToSpawnObstacle;
+            if(transformLookup.TryGetComponent(tile.LastSpawnedDynamicObstacle, out var lastSpawnedObstacleTransform))
+                shouldSpawn = math.abs(lastSpawnedObstacleTransform.Position.x) <= tile.NextAbsXPositionToSpawnObstacle;
         }
         if(shouldSpawn)
         {

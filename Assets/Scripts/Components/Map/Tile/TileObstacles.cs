@@ -25,6 +25,12 @@ public struct RoadObstaclesConfig : IComponentData
     public float2 DistanceRangeBetweenObstacles;
 }
 
+public struct WaterObstaclesConfig : IComponentData
+{
+    public int TotalWeight;
+    public float2 DistanceRangeBetweenObstacles;
+}
+
 [InternalBufferCapacity(0)]
 public struct GrassStaticObstacles : IBufferElementData, ObstaclesBuffer
 {
