@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8662622066422355609
 MeshFilter:
@@ -105,8 +105,8 @@ MonoBehaviour:
     y: -0.00000008940697
     z: -0.000002413988
   m_PrimitiveSize:
-    x: 0.4
-    y: 0.4
+    x: 0.5
+    y: 0.5
     z: 2.2
   m_PrimitiveOrientation:
     Value:
@@ -116,11 +116,11 @@ MonoBehaviour:
     RotationOrder: 4
   m_Capsule:
     Height: 2.2
-    Radius: 0.2
+    Radius: 0.25
     Axis: 2
   m_Cylinder:
     Height: 2.2
-    Radius: 0.2
+    Radius: 0.25
     Axis: 2
   m_CylinderSideCount: 20
   m_SphereRadius: 1.1
