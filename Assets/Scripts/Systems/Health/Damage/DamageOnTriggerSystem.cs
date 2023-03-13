@@ -52,7 +52,7 @@ public partial struct DamageOnTriggerSystem : ISystem
                 var damageToDeal = damageOnTrigger.ValueRO.DamageToDealForMinVelocity;
                 if(PhysicsVelocityLookup.TryGetComponent(damagerEntity, out var physicsVelocity))
                 {
-                    if(math.lengthsq(physicsVelocity.Linear) > damageOnTrigger.ValueRO.MinVelocityToDamageSqr)
+                    if(math.lengthsq(physicsVelocity.Linear) < damageOnTrigger.ValueRO.MinVelocityToDamageSqr)
                         damageToDeal = 0;
                 }
                 
