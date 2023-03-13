@@ -183,6 +183,10 @@ GameObject:
   - component: {fileID: 7999185268424982551}
   - component: {fileID: 4525074711517602164}
   - component: {fileID: 1836769612452498604}
+  - component: {fileID: 7495168286430532742}
+  - component: {fileID: 8050029717993667985}
+  - component: {fileID: 7257518184312258597}
+  - component: {fileID: 847998244531442914}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -223,7 +227,7 @@ MonoBehaviour:
   m_MotionType: 0
   m_Smoothing: 0
   m_Mass: 1000
-  m_LinearDamping: 0.2
+  m_LinearDamping: 0.3
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
     x: 0
@@ -252,7 +256,7 @@ MonoBehaviour:
   m_WorldIndex: 0
   m_CustomTags:
     Tag00: 0
-    Tag01: 0
+    Tag01: 1
     Tag02: 0
     Tag03: 0
     Tag04: 0
@@ -441,6 +445,103 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minVelocityToDamage: 4
   _damageToDealForMinVelocity: 1
+--- !u!114 &7495168286430532742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490995594025503570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b327aedba9edc6b41b89d6c2585616a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 30
+--- !u!114 &8050029717993667985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490995594025503570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06afa957392360544bca7c2f669d8711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minForceToDamage: 20
+  _damageToDealForMinForce: 15
+  _bodiesThatCanDamage:
+    Tag00: 0
+    Tag01: 1
+    Tag02: 0
+    Tag03: 0
+    Tag04: 0
+    Tag05: 0
+    Tag06: 0
+    Tag07: 0
+--- !u!114 &7257518184312258597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490995594025503570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9d2bd89a4696d4cbd19c1ca192522a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _force: 20000
+  _radius: 5
+  _hittablePhysicsTags:
+    Category00: 0
+    Category01: 1
+    Category02: 1
+    Category03: 0
+    Category04: 0
+    Category05: 0
+    Category06: 0
+    Category07: 0
+    Category08: 0
+    Category09: 0
+    Category10: 0
+    Category11: 0
+    Category12: 0
+    Category13: 0
+    Category14: 0
+    Category15: 0
+    Category16: 0
+    Category17: 0
+    Category18: 0
+    Category19: 0
+    Category20: 0
+    Category21: 0
+    Category22: 0
+    Category23: 0
+    Category24: 0
+    Category25: 0
+    Category26: 0
+    Category27: 0
+    Category28: 0
+    Category29: 0
+    Category30: 0
+    Category31: 0
+  _explosionPrefab: {fileID: 6642763367462127403, guid: 12a8a95d64b14dd4a945631836cd2c4b,
+    type: 3}
+--- !u!114 &847998244531442914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490995594025503570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6e8f92aaf9fce45b2032d4ed201e51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1606757343480156770
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +684,7 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_CollisionResponse:
       m_Override: 0
-      m_Value: 0
+      m_Value: 1
     m_Friction:
       m_Override: 0
       m_Value:
@@ -726,7 +827,7 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_CollisionResponse:
       m_Override: 0
-      m_Value: 0
+      m_Value: 1
     m_Friction:
       m_Override: 0
       m_Value:

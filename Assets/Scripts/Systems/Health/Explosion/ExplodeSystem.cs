@@ -15,6 +15,8 @@ public partial struct ExplodeSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        var entityCommandBufferSystem = SystemAPI.GetSingleton<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
+        var entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer(state.WorldUnmanaged);
         var physicsWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
         var fixedDeltaTime = SystemAPI.Time.DeltaTime;
         foreach(var (explosion, transform) in SystemAPI.Query<RefRW<Explosion>, LocalTransform>())
@@ -32,6 +34,7 @@ public partial struct ExplodeSystem : ISystem
                     PhysicsVelocityLookup = SystemAPI.GetComponentLookup<PhysicsVelocity>(false),
                     PhysicsColliderLookup = SystemAPI.GetComponentLookup<PhysicsCollider>(true),
                     PhysicsMassLookup = SystemAPI.GetComponentLookup<PhysicsMass>(true),
+                    EntityCommandBuffer = entityCommandBuffer
                 }.Schedule(state.Dependency);
                 
                 state.Dependency = explodeForceJobHandle;
@@ -50,6 +53,8 @@ public partial struct ExplodeSystem : ISystem
         public ComponentLookup<PhysicsVelocity> PhysicsVelocityLookup;
         [ReadOnly] public ComponentLookup<PhysicsMass> PhysicsMassLookup;
         [ReadOnly] public ComponentLookup<PhysicsCollider> PhysicsColliderLookup;
+
+        public EntityCommandBuffer EntityCommandBuffer;
         
         [BurstCompile]
         public void Execute()
@@ -83,6 +88,8 @@ public partial struct ExplodeSystem : ISystem
                             hitVelocity.ValueRW.ApplyExplosionForce(hitMass.ValueRO, hitCollider.ValueRO, hitBody.WorldFromBody.pos, 
                                 hitBody.WorldFromBody.rot, hitBody.Scale, Explosion.Config.Force, ExplosionPosition,
                                 Explosion.Config.Radius, FixedDeltaTime, up, collisionFilter, 0, ForceMode.Impulse);
+
+                            EntityCommandBuffer.AddComponent<HitByExplosion>(hit.Entity);
                         }
                     }
                 }

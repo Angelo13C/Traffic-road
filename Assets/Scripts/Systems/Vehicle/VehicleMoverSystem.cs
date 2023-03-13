@@ -8,7 +8,7 @@ public partial struct VehicleMoverSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        foreach(var (vehicleMover, physicsVelocity) in SystemAPI.Query<VehicleMover, RefRW<PhysicsVelocity>>())
+        foreach(var (vehicleMover, physicsVelocity) in SystemAPI.Query<VehicleMover, RefRW<PhysicsVelocity>>().WithNone<HitByExplosion>())
         {
             var velocity = vehicleMover.Speed * VehicleMover.MOVE_DIRECTION;
             physicsVelocity.ValueRW.Linear = velocity;

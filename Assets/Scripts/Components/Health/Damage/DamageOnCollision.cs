@@ -4,4 +4,5 @@ public struct DamageOnCollision : IComponentData
 {
     public float MinForceToDamage;
     public int DamageToDealForMinForce;
+    public byte BodiesThatCanDamageTags;
 }

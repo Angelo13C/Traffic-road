@@ -31,11 +31,18 @@ public partial struct DamageOnCollisionSystem : ISystem
         public void Execute(CollisionEvent collisionEvent)
         {
             var entityA = Entity.Null;
+            DamageOnCollision damageOnCollisionA;
             var entityB = Entity.Null;
-            if(DamageOnCollision.HasComponent(collisionEvent.EntityA))
+            DamageOnCollision damageOnCollisionB;
+            if(DamageOnCollision.TryGetComponent(collisionEvent.EntityA, out damageOnCollisionA))
                 entityA = collisionEvent.EntityA;
-            if(DamageOnCollision.HasComponent(collisionEvent.EntityB))
+            if(DamageOnCollision.TryGetComponent(collisionEvent.EntityB, out damageOnCollisionB))
                 entityB = collisionEvent.EntityB;
+    
+            if(entityA != Entity.Null && (PhysicsWorldSingleton.Bodies[collisionEvent.BodyIndexB].CustomTags & damageOnCollisionA.BodiesThatCanDamageTags) == 0)
+                entityA = Entity.Null;
+            if(entityB != Entity.Null && (PhysicsWorldSingleton.Bodies[collisionEvent.BodyIndexA].CustomTags & damageOnCollisionB.BodiesThatCanDamageTags) == 0)
+                entityB = Entity.Null;
 
             if(entityA != Entity.Null || entityB != Entity.Null)
             {
@@ -45,21 +52,19 @@ public partial struct DamageOnCollisionSystem : ISystem
                 // Had to duplicate the code for each entity instead of using a function because I got the error CS1673
                 if(entityA != Entity.Null)
                 {
-                    var damageOnCollision = DamageOnCollision.GetRefRO(entityA);
-                    if(collisionForce >= damageOnCollision.ValueRO.MinForceToDamage)
+                    if(collisionForce >= damageOnCollisionA.MinForceToDamage)
                     {
                         var health = Health.GetRefRW(entityA, false);
-                        var damage = damageOnCollision.ValueRO.DamageToDealForMinForce;
+                        var damage = damageOnCollisionA.DamageToDealForMinForce;
                         health.ValueRW.Current -= damage;
                     }
                 }
                 if(entityB != Entity.Null)
                 {
-                    var damageOnCollision = DamageOnCollision.GetRefRO(entityB);
-                    if(collisionForce >= damageOnCollision.ValueRO.MinForceToDamage)
+                    if(collisionForce >= damageOnCollisionB.MinForceToDamage)
                     {
                         var health = Health.GetRefRW(entityB, false);
-                        var damage = damageOnCollision.ValueRO.DamageToDealForMinForce;
+                        var damage = damageOnCollisionB.DamageToDealForMinForce;
                         health.ValueRW.Current -= damage;
                     }
                 }
