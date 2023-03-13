@@ -11,8 +11,6 @@ public class HealthAuthoring : MonoBehaviour
 		{
 			var health = new Health {
 				Current = authoring._maxHealth,
-				Max = authoring._maxHealth,
-				LastDamagerEntity = Entity.Null
 			};
 
 			AddComponent(health);
