@@ -1,10 +1,14 @@
 using Unity.Entities;
 using UnityEngine;
 using Unity.Collections;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class MapAuthoring : MonoBehaviour
 {
-	[SerializeField] [Min(1)] private int _seed = 1;
+	[HideInInspector] public bool RandomSeed = false;
+	[HideInInspector] public int Seed = 1;
 
 	[System.Serializable]
 	private struct TilePrefab
@@ -29,8 +33,9 @@ public class MapAuthoring : MonoBehaviour
 	{
 		public override void Bake(MapAuthoring authoring)
 		{
+			var seed = (uint) (authoring.RandomSeed ? System.DateTime.Now.Millisecond : authoring.Seed);
 			var map = new Map {
-				Rng = new Unity.Mathematics.Random((uint) authoring._seed),
+				Rng = new Unity.Mathematics.Random(seed),
 			};
 			AddComponent(map);
 
@@ -91,3 +96,23 @@ public class MapAuthoring : MonoBehaviour
 		}
 	}
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(MapAuthoring))]
+public class MapAuthoringEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        var mapAuthoring = target as MapAuthoring;
+        mapAuthoring.RandomSeed = EditorGUILayout.Toggle("Random seed", mapAuthoring.RandomSeed);
+
+        if (!mapAuthoring.RandomSeed)
+        {
+            mapAuthoring.Seed = EditorGUILayout.IntField("Seed", mapAuthoring.Seed);
+			mapAuthoring.Seed = Mathf.Max(mapAuthoring.Seed, 1);
+        }
+
+        base.OnInspectorGUI();
+    }
+}
+#endif
