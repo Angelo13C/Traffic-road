@@ -280,6 +280,8 @@ MonoBehaviour:
       Duration: 4
       Force: 0.6
       MaxHeight: 8
+    TimeFreeze:
+      Duration: 4
 --- !u!1 &1354205372
 GameObject:
   m_ObjectHideFlags: 0
