@@ -276,6 +276,10 @@ MonoBehaviour:
       Duration: 6
       Force: 10
       CurrentInAirJumpsCount: 0
+    Jetpack:
+      Duration: 4
+      Force: 0.6
+      MaxHeight: 8
 --- !u!1 &1354205372
 GameObject:
   m_ObjectHideFlags: 0

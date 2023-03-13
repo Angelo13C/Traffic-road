@@ -4,4 +4,5 @@ using Unity.Entities;
 public struct SuperpowersHolder : IComponentData
 {
     public DoubleJumpSP DoubleJump;
+    public JetpackSP Jetpack;
 }

@@ -16,6 +16,11 @@ public partial struct SuperpowerIsGoneSystem : ISystem
             if(doubleJumpSP.ValueRO.HasFinished)
                 entityCommandBuffer.RemoveComponent<DoubleJumpSP>(entity);
         }
+        foreach(var (jetpackSP, entity) in SystemAPI.Query<JetpackSP>().WithEntityAccess())
+        {
+            if(jetpackSP.HasFinished)
+                entityCommandBuffer.RemoveComponent<JetpackSP>(entity);
+        }
         entityCommandBuffer.Playback(state.EntityManager);
     }
 }
