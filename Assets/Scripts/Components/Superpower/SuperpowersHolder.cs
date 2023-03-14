@@ -8,4 +8,5 @@ public struct SuperpowersHolder : IComponentData
     public TimeFreezeSP TimeFreeze;
     public TeleportSP Teleport;
     public SuperSpeedSP SuperSpeed;
+    public ExplodeSP Explode;
 }
