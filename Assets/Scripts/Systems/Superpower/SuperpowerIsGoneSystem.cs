@@ -26,6 +26,11 @@ public partial struct SuperpowerIsGoneSystem : ISystem
             if(timeFreezeSP.HasFinished)
                 entityCommandBuffer.RemoveComponent<TimeFreezeSP>(entity);
         }
+        foreach(var (superSpeedSP, entity) in SystemAPI.Query<SuperSpeedSP>().WithEntityAccess())
+        {
+            if(superSpeedSP.HasFinished)
+                entityCommandBuffer.RemoveComponent<SuperSpeedSP>(entity);
+        }
         entityCommandBuffer.Playback(state.EntityManager);
     }
 }

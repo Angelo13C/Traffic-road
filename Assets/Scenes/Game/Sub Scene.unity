@@ -317,6 +317,10 @@ MonoBehaviour:
         Category29: 0
         Category30: 0
         Category31: 0
+    SuperSpeed:
+      Duration: 5
+      SpeedMultiplier: 3.5
+      HasBeenApplied: 0
 --- !u!114 &950728398
 MonoBehaviour:
   m_ObjectHideFlags: 0

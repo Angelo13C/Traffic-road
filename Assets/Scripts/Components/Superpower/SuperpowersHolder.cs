@@ -7,4 +7,5 @@ public struct SuperpowersHolder : IComponentData
     public JetpackSP Jetpack;
     public TimeFreezeSP TimeFreeze;
     public TeleportSP Teleport;
+    public SuperSpeedSP SuperSpeed;
 }
