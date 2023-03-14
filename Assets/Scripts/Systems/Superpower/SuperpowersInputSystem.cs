@@ -7,12 +7,8 @@ public partial struct SuperpowersInputSystem : ISystem
     {
         foreach(var (superpowersInput, superpowers) in SystemAPI.Query<SuperpowersInput, RefRW<Superpowers>>())
         {
-            if(Input.GetMouseButtonDown(0))
-            {
-                var screenPosition = Input.mousePosition;
-                var ray = superpowersInput.Camera.ScreenPointToRay(screenPosition);
-                superpowers.ValueRW.Ray = ray;
-            }
+            var screenPosition = Input.mousePosition;
+            superpowers.ValueRW.Ray = superpowersInput.Camera.ScreenPointToRay(screenPosition);
         }
     }
 }

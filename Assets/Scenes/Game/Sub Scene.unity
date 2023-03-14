@@ -321,6 +321,11 @@ MonoBehaviour:
       Duration: 5
       SpeedMultiplier: 3.5
       HasBeenApplied: 0
+    ThrowRock:
+      DistanceFromEye: 1
+      ThrowSpeed: 20
+  _rockToThrowPrefab: {fileID: 8129792287861217939, guid: 50738a40de217e74ab94d72dedd0e4a9,
+    type: 3}
 --- !u!114 &950728398
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,4 +9,5 @@ public struct SuperpowersHolder : IComponentData
     public TeleportSP Teleport;
     public SuperSpeedSP SuperSpeed;
     public ExplodeSP Explode;
+    public ThrowRockSP ThrowRock;
 }
