@@ -1,6 +1,7 @@
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 
 [UpdateBefore(typeof(MapTileSpawnerSystem))]
@@ -16,7 +17,7 @@ public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
         {
             foreach(var (roadTile, transform) in SystemAPI.Query<RefRW<RoadTile>, LocalTransform>())
             {
-                SpawnObstacleIfNecessary<RoadTile, RoadDynamicObstacles>(transformLookup, ref roadTile.ValueRW, roadDynamicObstacles, roadObstaclesConfig.TotalWeight, roadObstaclesConfig.DistanceRangeBetweenObstacles, state.EntityManager, transform.Position, ref rng);
+                SpawnObstacleIfNecessary<RoadTile, RoadDynamicObstacles>(transformLookup, ref roadTile.ValueRW, roadDynamicObstacles, roadObstaclesConfig.TotalWeight, roadObstaclesConfig.DistanceRangeBetweenObstacles, state.EntityManager, transform.Position + new float3(0, 0.3f, 0), ref rng);
             }
         }
         
@@ -87,8 +88,8 @@ public partial struct MapDynamicObstaclesSpawnerSystem : ISystem
             Rotation = quaternion.RotateY(angle),
             Scale = 1
         });
-        entityManager.SetComponentData(spawnedObstacle, new VehicleMover {
-            Speed = tile.Speed
+        entityManager.SetComponentData(spawnedObstacle, new PhysicsVelocity {
+            Linear = new float3(-tile.Speed, 0, 0)
         });
         
         tile.NextAbsXPositionToSpawnObstacle = MapTilePrefab.TILE_LENGTH / 2 - rng.NextFloat(distanceRangeBetweenObstacles.x, distanceRangeBetweenObstacles.y);

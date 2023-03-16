@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3121410789522886145}
   - component: {fileID: 1649923567325006125}
   - component: {fileID: 5999251273552797720}
-  - component: {fileID: 8205616585235875222}
   - component: {fileID: 4766865949300237319}
   - component: {fileID: 2758165010928204646}
   m_Layer: 0
@@ -243,10 +242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccea9ea98e38942e0b0938c27ed1903e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MotionType: 0
+  m_MotionType: 1
   m_Smoothing: 0
   m_Mass: 500
-  m_LinearDamping: 0.2
+  m_LinearDamping: 0
   m_AngularDamping: 100000
   m_InitialLinearVelocity:
     x: 0
@@ -282,19 +281,6 @@ MonoBehaviour:
     Tag05: 0
     Tag06: 0
     Tag07: 0
---- !u!114 &8205616585235875222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3240636045434684505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e0c0163a1243f54eacb9cb67e66392a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 15
 --- !u!114 &4766865949300237319
 MonoBehaviour:
   m_ObjectHideFlags: 0

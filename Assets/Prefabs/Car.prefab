@@ -180,13 +180,13 @@ GameObject:
   - component: {fileID: 126913565811371573}
   - component: {fileID: 6658740974518532143}
   - component: {fileID: 8469409367844162899}
-  - component: {fileID: 7999185268424982551}
   - component: {fileID: 4525074711517602164}
   - component: {fileID: 1836769612452498604}
   - component: {fileID: 7495168286430532742}
   - component: {fileID: 8050029717993667985}
   - component: {fileID: 7257518184312258597}
   - component: {fileID: 847998244531442914}
+  - component: {fileID: -756200754477671426}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_MotionType: 0
   m_Smoothing: 0
   m_Mass: 1000
-  m_LinearDamping: 0.3
+  m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
     x: 0
@@ -406,19 +406,6 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
---- !u!114 &7999185268424982551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490995594025503570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e0c0163a1243f54eacb9cb67e66392a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 20
 --- !u!114 &4525074711517602164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,6 +529,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6e8f92aaf9fce45b2032d4ed201e51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-756200754477671426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490995594025503570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d28a1f76a369034584b871ac59de5ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionEvent:
+    Change: 1
+    NewValue: 10
+  HitByExplosionEvent:
+    Change: 0
+    NewValue: 0
+  BlackHoleEvent:
+    Change: 0
+    NewValue: 0
 --- !u!1 &1606757343480156770
 GameObject:
   m_ObjectHideFlags: 0

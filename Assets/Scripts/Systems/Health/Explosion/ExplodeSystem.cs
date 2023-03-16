@@ -15,8 +15,6 @@ public partial struct ExplodeSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var entityCommandBufferSystem = SystemAPI.GetSingleton<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
-        var entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer(state.WorldUnmanaged);
         var physicsWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
         var fixedDeltaTime = SystemAPI.Time.DeltaTime;
         foreach(var (explosion, transform) in SystemAPI.Query<RefRW<Explosion>, LocalTransform>())
@@ -34,7 +32,8 @@ public partial struct ExplodeSystem : ISystem
                     PhysicsVelocityLookup = SystemAPI.GetComponentLookup<PhysicsVelocity>(false),
                     PhysicsColliderLookup = SystemAPI.GetComponentLookup<PhysicsCollider>(true),
                     PhysicsMassLookup = SystemAPI.GetComponentLookup<PhysicsMass>(true),
-                    EntityCommandBuffer = entityCommandBuffer
+                    PhysicsDampingLookup = SystemAPI.GetComponentLookup<PhysicsDamping>(false),
+                    ChangeDragOnHitByExplosionLookup = SystemAPI.GetComponentLookup<ChangeDragOnHitByExplosion>(true)
                 }.Schedule(state.Dependency);
                 
                 state.Dependency = explodeForceJobHandle;
@@ -53,8 +52,8 @@ public partial struct ExplodeSystem : ISystem
         public ComponentLookup<PhysicsVelocity> PhysicsVelocityLookup;
         [ReadOnly] public ComponentLookup<PhysicsMass> PhysicsMassLookup;
         [ReadOnly] public ComponentLookup<PhysicsCollider> PhysicsColliderLookup;
-
-        public EntityCommandBuffer EntityCommandBuffer;
+        public ComponentLookup<PhysicsDamping> PhysicsDampingLookup;
+        [ReadOnly] public ComponentLookup<ChangeDragOnHitByExplosion> ChangeDragOnHitByExplosionLookup;
         
         [BurstCompile]
         public void Execute()
@@ -89,7 +88,12 @@ public partial struct ExplodeSystem : ISystem
                                 hitBody.WorldFromBody.rot, hitBody.Scale, Explosion.Config.Force, ExplosionPosition,
                                 Explosion.Config.Radius, FixedDeltaTime, up, collisionFilter, 0, ForceMode.Impulse);
 
-                            EntityCommandBuffer.AddComponent<HitByExplosion>(hit.Entity);
+                            var dragOfHitEntity = PhysicsDampingLookup.GetRefRWOptional(hit.Entity, false);
+                            if(dragOfHitEntity.IsValid)
+                            {
+                                if(ChangeDragOnHitByExplosionLookup.TryGetComponent(hit.Entity, out var changeDragOnCollision))
+                                    dragOfHitEntity.ValueRW.Linear = changeDragOnCollision.NewDrag;
+                            }
                         }
                     }
                 }
