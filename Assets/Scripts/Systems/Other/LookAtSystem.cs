@@ -14,8 +14,7 @@ public partial struct LookAtSystem : ISystem
             if(state.EntityManager.Exists(lookAt.EntityToLook))
             {
                 var targetTransform = SystemAPI.GetComponent<LocalTransform>(lookAt.EntityToLook);
-                var direction = math.normalize(transform.ValueRO.Position - targetTransform.Position);
-                transform.ValueRW.Rotation = quaternion.LookRotation(direction, math.up());
+                transform.ValueRW.Rotation = lookAt.GetLookRotation(transform.ValueRO.Position, targetTransform.Position);
             }
         }
     }

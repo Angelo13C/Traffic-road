@@ -10,4 +10,5 @@ public struct SuperpowersHolder : IComponentData
     public SuperSpeedSP SuperSpeed;
     public ExplodeSP Explode;
     public ThrowRockSP ThrowRock;
+    public BlackHoleSP BlackHole;
 }
