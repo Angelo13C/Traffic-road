@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:Label tabindex="-1" text="0" display-tooltip-when-elided="true" name="score" style="font-size: 40px; color: rgb(255, 255, 255); padding-left: 20px; -unity-font-style: bold; -unity-text-outline-width: 0;" />
+    </ui:VisualElement>
+</ui:UXML>
