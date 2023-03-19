@@ -18,19 +18,24 @@ public partial struct MapTileSpawnerSystem : ISystem
             waterTile.ValueRW.JustSpawned = false;
 
         var rng = new Random(1 + (uint) ((SystemAPI.Time.ElapsedTime + SystemAPI.Time.DeltaTime) * 10000));
+        var limitedMapLookup = SystemAPI.GetComponentLookup<LimitedMap>(true);
         foreach(var (mapViewer, mapViewerTransform) in SystemAPI.Query<MapViewer, LocalTransform>())
         {
             var mapViewerTilePosition = (int) math.floor(mapViewerTransform.Position.z / MapTilePrefab.TILE_WIDTH);
             var lastVisibleTile = mapViewerTilePosition + mapViewer.VisibleTilesCount;
-            foreach(var (map, mapTiles, tileConfigs, tilePrefabs) in SystemAPI.Query<RefRW<Map>, DynamicBuffer<MapTile>, MapTileConfigs, DynamicBuffer<MapTilePrefab>>())
+            foreach(var (map, mapTiles, tileConfigs, tilePrefabs, mapEntity) in SystemAPI.Query<RefRW<Map>, DynamicBuffer<MapTile>, MapTileConfigs, DynamicBuffer<MapTilePrefab>>().WithEntityAccess())
             {
-                if(mapTiles.Length < lastVisibleTile)
+                var maxTilesCount = int.MaxValue;
+                if (limitedMapLookup.TryGetComponent(mapEntity, out var limitedMap))
+                    maxTilesCount = limitedMap.TilesCount;
+                
+                if(mapTiles.Length < lastVisibleTile && mapTiles.Length < maxTilesCount)
                 {
                     var entityCommandBufferSystem = SystemAPI.GetSingleton<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
                     var entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer(state.WorldUnmanaged);
 
                     ref var configs = ref tileConfigs.BlobRefeence.Value;
-                    var remainingTilesToSpawn = lastVisibleTile - mapTiles.Length;
+                    var remainingTilesToSpawn = math.min(lastVisibleTile, maxTilesCount) - mapTiles.Length;
                     var lastTile = MapTile.GetLastTile(mapTiles);
                     while(remainingTilesToSpawn > 0)
                     {
