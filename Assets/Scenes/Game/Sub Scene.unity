@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 1626544068}
   - component: {fileID: 1626544069}
   - component: {fileID: 1626544070}
+  - component: {fileID: 1626544071}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -584,6 +585,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roadMarkingsPrefab: {fileID: 5133691023848848210, guid: d3a3dbea42d816d45bf7f86479ba2c6f,
     type: 3}
+--- !u!114 &1626544071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626544066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c62860f3e8faf54a9c4361b43345edd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _roadTileEndPrefabs:
+    Start: {fileID: 1268311845206812954, guid: cf9aa37e1e7bf9c41b473c7449faff00, type: 3}
+    Continuation: {fileID: 3778003762265066604, guid: 2b9a4e4a9dc7bcd4fbe3b5fa78b26c77,
+      type: 3}
+    End: {fileID: 7741117481794427359, guid: 6f10e5c99ad3530459535048cf9f2b65, type: 3}
+    Single: {fileID: 5983932653012718901, guid: 5183090b448c40246a20f21d87d56dfb,
+      type: 3}
+  _grassTileEndPrefabs:
+    Start: {fileID: 0}
+    Continuation: {fileID: 0}
+    End: {fileID: 0}
+    Single: {fileID: 0}
+  _waterTileEndPrefabs:
+    Start: {fileID: 1268311845206812954, guid: cf9aa37e1e7bf9c41b473c7449faff00, type: 3}
+    Continuation: {fileID: 3778003762265066604, guid: 2b9a4e4a9dc7bcd4fbe3b5fa78b26c77,
+      type: 3}
+    End: {fileID: 7741117481794427359, guid: 6f10e5c99ad3530459535048cf9f2b65, type: 3}
+    Single: {fileID: 5983932653012718901, guid: 5183090b448c40246a20f21d87d56dfb,
+      type: 3}
 --- !u!1001 &1856261861
 PrefabInstance:
   m_ObjectHideFlags: 0
