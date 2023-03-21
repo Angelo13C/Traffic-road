@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 599097211823949860}
   - component: {fileID: 154406877103862344}
   - component: {fileID: 618137138889624207}
+  - component: {fileID: 500862391543427522}
   m_Layer: 0
   m_Name: Black hole
   m_TagString: Untagged
@@ -259,6 +260,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c16549610bfe4458aa9389201d072bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &500862391543427522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591653906210428441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45cbdba169a44a6a8c4557e02ef1bdbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _texture: {fileID: 2800000, guid: 28b3e23199576f74eac3d4d8197f8f3b, type: 3}
 --- !u!1 &8970235762193417645
 GameObject:
   m_ObjectHideFlags: 0
