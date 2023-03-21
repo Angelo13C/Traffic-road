@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7236698504693050469}
   - component: {fileID: -6214556161423609362}
   - component: {fileID: 7263882479790375489}
+  - component: {fileID: 8379415339669610999}
   m_Layer: 0
   m_Name: Throwable rock
   m_TagString: Untagged
@@ -293,3 +294,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _texture: {fileID: 2800000, guid: c6382c15acd5f8241b904fdc90be05e0, type: 3}
+--- !u!114 &8379415339669610999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8129792287861217939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8b9dd5245b281747ad86f4591f11f7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _triggeringKey: 323
+  _triggerKey: 323
