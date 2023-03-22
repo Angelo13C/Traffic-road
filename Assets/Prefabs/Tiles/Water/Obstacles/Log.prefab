@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MotionType: 1
-  m_Smoothing: 0
+  m_Smoothing: 1
   m_Mass: 500
   m_LinearDamping: 0
   m_AngularDamping: 100000
