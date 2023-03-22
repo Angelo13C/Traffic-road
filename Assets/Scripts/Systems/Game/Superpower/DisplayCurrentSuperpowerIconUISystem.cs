@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 
 public partial struct DisplayCurrentSuperpowerIconUISystem : ISystem
 {
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         foreach(var (heldSuperpowers, currentSuperpowerUI) in SystemAPI.Query<DynamicBuffer<HeldSuperpower>, CurrentSuperpowerUI>())
