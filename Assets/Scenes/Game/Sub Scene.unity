@@ -571,6 +571,7 @@ MonoBehaviour:
   - {fileID: 1591653906210428441, guid: db2de1e071b3a504cbeacba859476373, type: 3}
   - {fileID: 8941732121007398630, guid: 5f582a1dd0c382f48ab944512bc834d8, type: 3}
   - {fileID: 23357185192113056, guid: d056b124fca45384abfbd2272543b9ce, type: 3}
+  _showCurrentSuperpowerInUI: 1
 --- !u!114 &950728403
 MonoBehaviour:
   m_ObjectHideFlags: 0

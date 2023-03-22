@@ -4,6 +4,7 @@ using UnityEngine;
 public class SuperpowersHolderAuthoring : MonoBehaviour
 {
 	[SerializeField] private GameObject[] _initiallyHoldSuperpowers;
+	[SerializeField] private bool _showCurrentSuperpowerInUI;
 	
 	class Baker : Baker<SuperpowersHolderAuthoring>
 	{
@@ -14,6 +15,9 @@ public class SuperpowersHolderAuthoring : MonoBehaviour
 				LastUsedSuperpower = Entity.Null
 			};
 			AddComponent(superpowersUser);
+
+			if (authoring._showCurrentSuperpowerInUI)
+				AddComponentObject(new CurrentSuperpowerUI());
 			
 			var heldSuperpowers = AddBuffer<HeldSuperpower>();
 			heldSuperpowers.ResizeUninitialized(authoring._initiallyHoldSuperpowers.Length);
