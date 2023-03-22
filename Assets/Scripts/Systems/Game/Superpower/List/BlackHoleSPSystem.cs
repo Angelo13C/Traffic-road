@@ -4,44 +4,42 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
-using UnityEngine;
 
 [BurstCompile]
+[UpdateAfter(typeof(UpdateCameraRaysSystem))]
 public partial struct BlackHoleSPSystem : ISystem
 {
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
-        foreach(var (blackHole, superpowers, entity) in SystemAPI.Query<BlackHoleSP, Superpowers>().WithEntityAccess())
+        if(SystemAPI.TryGetSingleton<CameraRays>(out var cameraRays))
         {
-            if(Input.GetMouseButtonUp(0))
+            foreach(var (blackHole, transform, triggeredBy) in SystemAPI.Query<BlackHoleSP, RefRW<LocalTransform>, TriggeredBy>().WithAll<SuperpowerTriggering>())
             {
-                var spawnedBlackHole = state.EntityManager.Instantiate(blackHole.BlackHolePrefab);
-
+                transform.ValueRW.Position = cameraRays.ScreenCenter.origin +
+                                             cameraRays.ScreenCenter.direction * blackHole.SpawnDistanceFromEye;
+            }
+            
+            foreach(var (blackHole, transform, entity) in SystemAPI.Query<BlackHoleSP, RefRW<LocalTransform>>().WithAll<SuperpowerJustFinishedTriggering>().WithEntityAccess())
+            {
                 if(SystemAPI.TryGetSingletonEntity<FirstPersonCharacterComponent>(out var playerEntity))
                 {
-                    var spawnedBlackHoleDistortionEntity = state.EntityManager.GetBuffer<LinkedEntityGroup>(spawnedBlackHole)[1].Value;
+                    var spawnedBlackHoleDistortionEntity = state.EntityManager.GetBuffer<LinkedEntityGroup>(entity)[1].Value;
                     var lookAt = new LookAt {
                         EntityToLook = playerEntity
                     };
                     SystemAPI.SetComponent(spawnedBlackHoleDistortionEntity, lookAt);
+
+                    SystemAPI.SetComponent(entity, new PhysicsVelocity
+                    {
+                        Linear = cameraRays.ScreenCenter.direction * blackHole.ThrowSpeed 
+                    });
+                    SystemAPI.SetComponent(entity, new PhysicsGravityFactor
+                    {
+                        Value = 1
+                    });
                 }
-
-                SystemAPI.SetComponent(spawnedBlackHole, new LocalTransform {
-                    Position = superpowers.Ray.origin + superpowers.Ray.direction * blackHole.SpawnDistanceFromEye,
-                    Rotation = quaternion.identity,
-                    Scale = 1f
-                });
-                SystemAPI.SetComponent(spawnedBlackHole, new PhysicsVelocity {
-                    Angular = float3.zero,
-                    Linear = superpowers.Ray.direction * blackHole.ThrowSpeed
-                });
-
-                entityCommandBuffer.RemoveComponent<BlackHoleSP>(entity);
             }
         }
-
-        entityCommandBuffer.Playback(state.EntityManager);
     }
 }

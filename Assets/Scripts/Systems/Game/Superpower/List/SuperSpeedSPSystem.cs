@@ -9,17 +9,21 @@ public partial struct SuperSpeedSPSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         var deltaTime = SystemAPI.Time.DeltaTime;
-        foreach(var (superSpeedSP, character) in SystemAPI.Query<RefRW<SuperSpeedSP>, RefRW<FirstPersonCharacterComponent>>())
+        foreach(var (superSpeedSP, triggeredBy) in SystemAPI.Query<RefRW<SuperSpeedSP>, TriggeredBy>())
         {
             superSpeedSP.ValueRW.Duration -= deltaTime;
             if(!superSpeedSP.ValueRO.HasBeenApplied)
             {
-                character.ValueRW.GroundMaxSpeed *= superSpeedSP.ValueRO.SpeedMultiplier;
+                var character = SystemAPI.GetComponent<FirstPersonCharacterComponent>(triggeredBy.By);
+                character.GroundMaxSpeed *= superSpeedSP.ValueRO.SpeedMultiplier;
+                SystemAPI.SetComponent(triggeredBy.By, character);
                 superSpeedSP.ValueRW.HasBeenApplied = true;
             }
             if(superSpeedSP.ValueRO.HasFinished)
             {
-                character.ValueRW.GroundMaxSpeed /= superSpeedSP.ValueRO.SpeedMultiplier;
+                var character = SystemAPI.GetComponent<FirstPersonCharacterComponent>(triggeredBy.By);
+                character.GroundMaxSpeed /= superSpeedSP.ValueRO.SpeedMultiplier;
+                SystemAPI.SetComponent(triggeredBy.By, character);
             }
         }
     }

@@ -1,14 +1,11 @@
 using Unity.Entities;
 
-[System.Serializable]
-public struct SuperpowersHolder : IComponentData
+public struct SuperpowerUser : IComponentData
 {
-    public DoubleJumpSP DoubleJump;
-    public JetpackSP Jetpack;
-    public TimeFreezeSP TimeFreeze;
-    public TeleportSP Teleport;
-    public SuperSpeedSP SuperSpeed;
-    public ExplodeSP Explode;
-    public ThrowRockSP ThrowRock;
-    public BlackHoleSP BlackHole;
+    public Entity LastUsedSuperpower;
+}
+
+public struct HeldSuperpower : IBufferElementData
+{
+    public Entity Prefab;
 }

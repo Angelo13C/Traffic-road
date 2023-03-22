@@ -14,22 +14,22 @@ public partial struct SuperpowerIsGoneSystem : ISystem
         {
             doubleJumpSP.ValueRW.Duration -= deltaTime;
             if(doubleJumpSP.ValueRO.HasFinished)
-                entityCommandBuffer.RemoveComponent<DoubleJumpSP>(entity);
+                entityCommandBuffer.DestroyEntity(entity);
         }
         foreach(var (jetpackSP, entity) in SystemAPI.Query<JetpackSP>().WithEntityAccess())
         {
             if(jetpackSP.HasFinished)
-                entityCommandBuffer.RemoveComponent<JetpackSP>(entity);
+                entityCommandBuffer.DestroyEntity(entity);
         }
         foreach(var (timeFreezeSP, entity) in SystemAPI.Query<TimeFreezeSP>().WithEntityAccess())
         {
             if(timeFreezeSP.HasFinished)
-                entityCommandBuffer.RemoveComponent<TimeFreezeSP>(entity);
+                entityCommandBuffer.DestroyEntity(entity);
         }
         foreach(var (superSpeedSP, entity) in SystemAPI.Query<SuperSpeedSP>().WithEntityAccess())
         {
             if(superSpeedSP.HasFinished)
-                entityCommandBuffer.RemoveComponent<SuperSpeedSP>(entity);
+                entityCommandBuffer.DestroyEntity(entity);
         }
         entityCommandBuffer.Playback(state.EntityManager);
     }

@@ -12,13 +12,19 @@ public partial struct JetpackSPSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         var deltaTime = SystemAPI.Time.DeltaTime;
-        foreach(var (jetpackSP, transform, characterBody) in SystemAPI.Query<RefRW<JetpackSP>, LocalTransform, RefRW<KinematicCharacterBody>>())
+        foreach(var (jetpackSP, triggeredBy) in SystemAPI.Query<RefRW<JetpackSP>, TriggeredBy>())
         {
-            if(transform.Position.y <= jetpackSP.ValueRO.MaxHeight && Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space))
             {
-                var jetpackVelocity = math.up() * jetpackSP.ValueRO.Force;
-                CharacterControlUtilities.StandardJump(ref characterBody.ValueRW, jetpackVelocity, false, math.up());
-                jetpackSP.ValueRW.Duration -= deltaTime;
+                var transform = SystemAPI.GetComponent<LocalTransform>(triggeredBy.By);
+                if(transform.Position.y <= jetpackSP.ValueRO.MaxHeight)
+                {
+                    var characterBody = SystemAPI.GetComponent<KinematicCharacterBody>(triggeredBy.By);
+                    var jetpackVelocity = math.up() * jetpackSP.ValueRO.Force;
+                    CharacterControlUtilities.StandardJump(ref characterBody, jetpackVelocity, false, math.up());
+                    SystemAPI.SetComponent(triggeredBy.By, characterBody);
+                    jetpackSP.ValueRW.Duration -= deltaTime;
+                }
             }
         }
     }

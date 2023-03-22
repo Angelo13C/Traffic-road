@@ -9,7 +9,7 @@ public partial struct GrowOverTimeSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         var deltaTime = SystemAPI.Time.DeltaTime;
-        foreach(var (growOverTime, transform) in SystemAPI.Query<GrowOverTime, RefRW<LocalTransform>>())
+        foreach(var (growOverTime, transform) in SystemAPI.Query<GrowOverTime, RefRW<LocalTransform>>().WithNone<SuperpowerTriggering>())
         {
             transform.ValueRW.Scale += growOverTime.GrowthPerSecond * deltaTime;
         }

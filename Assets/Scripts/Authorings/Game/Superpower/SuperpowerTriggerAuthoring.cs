@@ -13,10 +13,10 @@ public class SuperpowerTriggererAuthoring : MonoBehaviour
 			if (authoring._triggeringKey != KeyCode.None)
 			{
 				AddComponent<SuperpowerTriggering>();
-				SetComponentEnabled<SuperpowerTriggering>(false);
+				SetComponentEnabled<SuperpowerTriggering>(true);
+				AddComponent<SuperpowerJustFinishedTriggering>();
+				SetComponentEnabled<SuperpowerJustFinishedTriggering>(false);
 			}
-			AddComponent<SuperpowerTriggered>();
-			SetComponentEnabled<SuperpowerTriggered>(false);
 
 			var inputTrigger = new SuperpowerInputTrigger
 			{
@@ -24,6 +24,12 @@ public class SuperpowerTriggererAuthoring : MonoBehaviour
 				TriggerKey = authoring._triggerKey
 			};
 			AddComponent(inputTrigger);
+
+			var triggeredBy = new TriggeredBy
+			{
+				By = Entity.Null
+			};
+			AddComponent(triggeredBy);
 		}
 	}
 }

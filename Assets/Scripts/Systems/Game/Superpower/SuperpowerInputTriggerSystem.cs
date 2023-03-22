@@ -1,29 +1,22 @@
 using Unity.Entities;
 using UnityEngine;
+using Unity.Burst;
 
-[UpdateAfter(typeof(SuperpowerTriggerResetSystem))]
+[BurstCompile]
 public partial struct SuperpowerInputTriggerSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
     {
-        var superpowerTriggeringLookup = SystemAPI.GetComponentLookup<SuperpowerTriggering>();
-        var superpowerTriggeredLookup = SystemAPI.GetComponentLookup<SuperpowerTriggered>();
-        foreach(var (superpowersInputTrigger, entity) in SystemAPI.Query<SuperpowerInputTrigger>().WithDisabled<SuperpowerTriggering>().WithEntityAccess())
+        foreach(var (_, entity) in SystemAPI.Query<SuperpowerJustFinishedTriggering>().WithEntityAccess())
         {
-            if(Input.GetKeyDown(superpowersInputTrigger.TriggerKey))
-                superpowerTriggeringLookup.SetComponentEnabled(entity, true);
+            SystemAPI.SetComponentEnabled<SuperpowerJustFinishedTriggering>(entity, false);
         }
-        foreach(var (superpowersInputTrigger, entity) in SystemAPI.Query<SuperpowerInputTrigger>().WithDisabled<SuperpowerTriggered>().WithEntityAccess())
+        foreach(var (superpowersInputTrigger, entity) in SystemAPI.Query<SuperpowerInputTrigger>().WithAll<SuperpowerTriggering>().WithNone<TeleportSP>().WithEntityAccess())
         {
-            if (superpowerTriggeringLookup.HasComponent(entity))
+            if (Input.GetKeyUp(superpowersInputTrigger.TriggerKey))
             {
-                if(Input.GetKeyUp(superpowersInputTrigger.TriggerKey))
-                    superpowerTriggeredLookup.SetComponentEnabled(entity, true);
-            }
-            else
-            {
-                if(Input.GetKeyDown(superpowersInputTrigger.TriggerKey))
-                    superpowerTriggeredLookup.SetComponentEnabled(entity, true);
+                SystemAPI.SetComponentEnabled<SuperpowerTriggering>(entity, false);
+                SystemAPI.SetComponentEnabled<SuperpowerJustFinishedTriggering>(entity, true);
             }
         }
     }

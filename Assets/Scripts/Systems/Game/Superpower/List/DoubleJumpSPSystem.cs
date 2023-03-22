@@ -10,19 +10,21 @@ public partial struct DoubleJumpSPSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        foreach(var (doubleJumpSP, character, characterBody) in SystemAPI.Query<RefRW<DoubleJumpSP>, FirstPersonCharacterComponent, RefRW<KinematicCharacterBody>>())
+        foreach(var (doubleJump, triggeredBy) in SystemAPI.Query<RefRW<DoubleJumpSP>, TriggeredBy>())
         {
-            if(characterBody.ValueRO.IsGrounded)
-                doubleJumpSP.ValueRW.CurrentInAirJumpsCount = 0;
+            var characterBody = SystemAPI.GetComponent<KinematicCharacterBody>(triggeredBy.By);
+            if(characterBody.IsGrounded)
+                doubleJump.ValueRW.CurrentInAirJumpsCount = 0;
 
             if(Input.GetKeyDown(KeyCode.Space))
-                doubleJumpSP.ValueRW.CurrentInAirJumpsCount++;
+                doubleJump.ValueRW.CurrentInAirJumpsCount++;
 
-            if(doubleJumpSP.ValueRO.CurrentInAirJumpsCount == 2)
+            if(doubleJump.ValueRO.CurrentInAirJumpsCount == 2)
             {
-                var jumpVelocity = math.up() * doubleJumpSP.ValueRO.Force;
-                CharacterControlUtilities.StandardJump(ref characterBody.ValueRW, jumpVelocity, false, math.up());
-                doubleJumpSP.ValueRW.CurrentInAirJumpsCount++;
+                var jumpVelocity = math.up() * doubleJump.ValueRO.Force;
+                CharacterControlUtilities.StandardJump(ref characterBody, jumpVelocity, false, math.up());
+                SystemAPI.SetComponent(triggeredBy.By, characterBody);
+                doubleJump.ValueRW.CurrentInAirJumpsCount++;
             }
         }
     }

@@ -3,24 +3,23 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Physics;
 using Unity.Transforms;
-using UnityEngine;
 
 [BurstCompile]
-[UpdateAfter(typeof(SuperpowersInputSystem))]
+[UpdateAfter(typeof(UpdateCameraRaysSystem))]
 public partial struct TeleportSPSystem : ISystem
 {
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
-        foreach(var (teleport, transform, superpowers, entity) in SystemAPI.Query<TeleportSP, RefRW<LocalTransform>, Superpowers>().WithEntityAccess())
+        if(SystemAPI.TryGetSingleton<CameraRays>(out var cameraRays))
         {
-            if(Input.GetMouseButtonDown(0))
+            var entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
+            foreach(var (teleport, triggeredBy, entity) in SystemAPI.Query<TeleportSP, TriggeredBy>().WithEntityAccess())
             {
                 var physicsWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
                 var ray = new RaycastInput {
-                    Start = superpowers.Ray.origin,
-                    End = superpowers.Ray.origin + superpowers.Ray.direction * teleport.MaxDistance,
+                    Start = cameraRays.Mouse.origin,
+                    End = cameraRays.Mouse.origin + cameraRays.Mouse.direction * teleport.MaxDistance,
                     Filter = new CollisionFilter {
                         BelongsTo = CollisionFilter.Default.BelongsTo,
                         CollidesWith = teleport.HittableFilter.Value,
@@ -29,12 +28,14 @@ public partial struct TeleportSPSystem : ISystem
                 };
                 if(physicsWorld.CastRay(ray, out var hit))
                 {
-                    transform.ValueRW.Position = hit.Position;
-                    entityCommandBuffer.RemoveComponent<TeleportSP>(entity);
+                    var transform = SystemAPI.GetComponent<LocalTransform>(triggeredBy.By);
+                    transform.Position = hit.Position;
+                    SystemAPI.SetComponent(triggeredBy.By, transform);
+                    entityCommandBuffer.DestroyEntity(entity);
                 }
             }
+            
+            entityCommandBuffer.Playback(state.EntityManager);
         }
-
-        entityCommandBuffer.Playback(state.EntityManager);
     }
 }

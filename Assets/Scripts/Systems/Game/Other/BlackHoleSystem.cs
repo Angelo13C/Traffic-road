@@ -29,7 +29,7 @@ public partial struct BlackHoleBecomeStaticSystem : ISystem
     {
         var entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
         var deltaTime = SystemAPI.Time.DeltaTime;
-        foreach(var (blackHole, transform, entity) in SystemAPI.Query<RefRW<BlackHole>, LocalTransform>().WithAll<PhysicsVelocity>().WithEntityAccess())
+        foreach(var (blackHole, transform, entity) in SystemAPI.Query<RefRW<BlackHole>, LocalTransform>().WithAll<PhysicsVelocity>().WithNone<SuperpowerTriggering>().WithEntityAccess())
         {
             blackHole.ValueRW.BecomeStaticRadius += blackHole.ValueRO.BecomeStaticRadiusGrowthPerSecond * deltaTime;
             

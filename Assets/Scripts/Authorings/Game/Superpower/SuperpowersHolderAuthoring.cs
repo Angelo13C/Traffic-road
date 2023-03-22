@@ -3,19 +3,27 @@ using UnityEngine;
 
 public class SuperpowersHolderAuthoring : MonoBehaviour
 {
-	[SerializeField] private SuperpowersHolder _superPowers;
-
-	[SerializeField] private GameObject _rockToThrowPrefab;
-	[SerializeField] private GameObject _blackHolePrefab;
-
+	[SerializeField] private GameObject[] _initiallyHoldSuperpowers;
+	
 	class Baker : Baker<SuperpowersHolderAuthoring>
 	{
 		public override void Bake(SuperpowersHolderAuthoring authoring)
 		{
-			authoring._superPowers.ThrowRock.RockPrefab = GetEntity(authoring._rockToThrowPrefab);
-			authoring._superPowers.BlackHole.BlackHolePrefab = GetEntity(authoring._blackHolePrefab);
-			AddComponent(authoring._superPowers);
-			AddComponent(authoring._superPowers.BlackHole);
+			var superpowersUser = new SuperpowerUser
+			{
+				LastUsedSuperpower = Entity.Null
+			};
+			AddComponent(superpowersUser);
+			
+			var heldSuperpowers = AddBuffer<HeldSuperpower>();
+			heldSuperpowers.ResizeUninitialized(authoring._initiallyHoldSuperpowers.Length);
+			for (var i = 0; i < heldSuperpowers.Length; i++)
+			{
+				heldSuperpowers[i] = new HeldSuperpower
+				{
+					Prefab = GetEntity(authoring._initiallyHoldSuperpowers[i])
+				};
+			}
 		}
 	}
 }

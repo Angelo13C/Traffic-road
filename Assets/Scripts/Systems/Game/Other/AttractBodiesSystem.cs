@@ -16,7 +16,7 @@ public partial struct AttractBodiesSystem : ISystem
     {
         var deltaTime = SystemAPI.Time.DeltaTime;
         var invDeltaTime = 1f / SystemAPI.Time.DeltaTime;
-        foreach(var (attractBodies, transform) in SystemAPI.Query<AttractBodies, LocalTransform>())
+        foreach(var (attractBodies, transform) in SystemAPI.Query<AttractBodies, LocalTransform>().WithNone<SuperpowerTriggering>())
         {
             var nearbyBodies = new NativeList<DistanceHit>(10, Allocator.Temp);
             var physicsWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().PhysicsWorld;
