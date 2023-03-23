@@ -14,7 +14,7 @@ public partial class MainCameraSystem : SystemBase
         {
             Entity mainEntityCameraEntity = SystemAPI.GetSingletonEntity<MainEntityCamera>();
             LocalToWorld targetLocalToWorld = SystemAPI.GetComponent<LocalToWorld>(mainEntityCameraEntity);
-            MainGameObjectCamera.Instance.transform.SetPositionAndRotation(targetLocalToWorld.Position, targetLocalToWorld.Rotation);
+            MainGameObjectCamera.Instance.SetLocalPositionAndRotation(targetLocalToWorld.Position, targetLocalToWorld.Rotation);
         }
     }
 }

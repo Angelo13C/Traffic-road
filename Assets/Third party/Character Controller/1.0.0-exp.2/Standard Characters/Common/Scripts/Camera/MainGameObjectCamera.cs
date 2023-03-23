@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class MainGameObjectCamera : MonoBehaviour
 {
-    public static Camera Instance;
+    public static Transform Instance;
 
     void Awake()
     {
-        Instance = GetComponent<UnityEngine.Camera>();
+        Instance = transform;
     }
 }
