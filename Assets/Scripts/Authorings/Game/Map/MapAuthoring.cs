@@ -33,7 +33,9 @@ public class MapAuthoring : MonoBehaviour
 	{
 		public override void Bake(MapAuthoring authoring)
 		{
-			var seed = (uint) (authoring.RandomSeed ? System.DateTime.Now.Millisecond : authoring.Seed);
+			var seed = (uint) (authoring.RandomSeed ? System.DateTime.Now.Ticks : authoring.Seed);
+			if (seed == 0)
+				seed = 1;
 			var map = new Map {
 				Rng = new Unity.Mathematics.Random(seed),
 			};
