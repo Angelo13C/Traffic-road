@@ -15,7 +15,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.3",
+      "version": "1.8.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -183,7 +183,7 @@
       }
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.21.3",
+      "version": "1.21.1",
       "depth": 2,
       "source": "registry",
       "dependencies": {},
