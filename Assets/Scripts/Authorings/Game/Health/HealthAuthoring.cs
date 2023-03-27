@@ -4,6 +4,7 @@ using UnityEngine;
 public class HealthAuthoring : MonoBehaviour
 {
 	[SerializeField] [Min(0)] private int _maxHealth;
+	[SerializeField] private bool _destroyOnDeath = true;
 
 	class Baker : Baker<HealthAuthoring>
 	{
@@ -14,6 +15,9 @@ public class HealthAuthoring : MonoBehaviour
 			};
 
 			AddComponent(health);
+			
+			if(authoring._destroyOnDeath)
+				AddComponent<DestroyOnDeath>();
 		}
 	}
 }

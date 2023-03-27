@@ -10,7 +10,7 @@ public partial struct DestroyOnDeathSystem : ISystem
     
     public void OnCreate(ref SystemState state)
     {
-        _deadQuery = state.GetEntityQuery(typeof(Dead));
+        _deadQuery = state.GetEntityQuery(typeof(Dead), typeof(DestroyOnDeath));
     }
 
     [BurstCompile]
