@@ -35,7 +35,7 @@ public partial struct MeteoriteFallSystem : ISystem
                 var spawnZBiased = meteoriteFall.ValueRO.CurrentZ;
                 if (spawnZBiased > targetZPosition)
                     spawnZBiased = math.lerp(targetZPosition, spawnZBiased, 0.5f);
-                var spawnZ = math.min(spawnZBiased - rng.NextFloat(20), maxZViewed);
+                var spawnZ = math.clamp(spawnZBiased - rng.NextFloat(20), 0, maxZViewed);
                 var spawnX = rng.NextFloat(-MapTilePrefab.TILE_LENGTH / 2, MapTilePrefab.TILE_LENGTH / 2);
                 SystemAPI.SetComponent(meteorite, new LocalTransform
                 {
