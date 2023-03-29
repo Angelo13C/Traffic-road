@@ -164,10 +164,8 @@ GameObject:
   - component: {fileID: 1287793444338662892}
   - component: {fileID: 4077788304110191622}
   - component: {fileID: 6781423466932737708}
-  - component: {fileID: 2184948827186664462}
-  - component: {fileID: 6003392164569440433}
-  - component: {fileID: 8341020568176750947}
   - component: {fileID: 2183205255372959238}
+  - component: {fileID: 778134196815193529}
   m_Layer: 0
   m_Name: Meteorite
   m_TagString: Untagged
@@ -290,11 +288,11 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_CollisionResponse:
       m_Override: 0
-      m_Value: 0
+      m_Value: 1
     m_Friction:
       m_Override: 0
       m_Value:
-        Value: 0.5
+        Value: 1
         CombineMode: 0
     m_Restitution:
       m_Override: 0
@@ -482,9 +480,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MotionType: 0
   m_Smoothing: 0
-  m_Mass: 10000
-  m_LinearDamping: 0.01
-  m_AngularDamping: 0.05
+  m_Mass: 50000
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.3
   m_InitialLinearVelocity:
     x: 0
     y: 0
@@ -519,55 +517,6 @@ MonoBehaviour:
     Tag05: 0
     Tag06: 0
     Tag07: 0
---- !u!114 &2184948827186664462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9090712538342497171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b327aedba9edc6b41b89d6c2585616a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHealth: 1
-  _destroyOnDeath: 0
---- !u!114 &6003392164569440433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9090712538342497171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06afa957392360544bca7c2f669d8711, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _minForceToDamage: 0
-  _damageToDealForMinForce: 1
-  _bodiesThatCanDamage:
-    Tag00: 1
-    Tag01: 1
-    Tag02: 1
-    Tag03: 1
-    Tag04: 1
-    Tag05: 1
-    Tag06: 1
-    Tag07: 1
---- !u!114 &8341020568176750947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9090712538342497171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a6e8f92aaf9fce45b2032d4ed201e51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2183205255372959238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,3 +566,15 @@ MonoBehaviour:
     Category31: 0
   _explosionPrefab: {fileID: 6642763367462127403, guid: 12a8a95d64b14dd4a945631836cd2c4b,
     type: 3}
+--- !u!114 &778134196815193529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9090712538342497171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b282622d71cc749a99de0390aed289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
