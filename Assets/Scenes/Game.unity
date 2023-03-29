@@ -764,6 +764,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2071861717}
   - component: {fileID: 2071861718}
+  - component: {fileID: 2071861719}
   m_Layer: 0
   m_Name: Camera offset
   m_TagString: Untagged
@@ -821,6 +822,20 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2071861719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071861715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a257897ce04dc64eb5ae266c62846be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 0}
+  StrengthMultiplier: 1
 --- !u!1 &2074467697
 GameObject:
   m_ObjectHideFlags: 0
