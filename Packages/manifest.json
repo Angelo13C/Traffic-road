@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.gasgiant.camera-shake": "https://github.com/gasgiant/Camera-Shake.git#upm",
     "com.havok.physics": "1.0.0-pre.44",
     "com.unity.charactercontroller": "1.0.0-exp.2",
     "com.unity.cinemachine": "2.9.5",
