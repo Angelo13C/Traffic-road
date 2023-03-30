@@ -33,6 +33,7 @@ public partial struct ExplodeSystem : ISystem
                     PhysicsColliderLookup = SystemAPI.GetComponentLookup<PhysicsCollider>(true),
                     PhysicsMassLookup = SystemAPI.GetComponentLookup<PhysicsMass>(true),
                     PhysicsDampingLookup = SystemAPI.GetComponentLookup<PhysicsDamping>(false),
+                    HealthLookup = SystemAPI.GetComponentLookup<Health>(false),
                     ChangeDragOnHitByExplosionLookup = SystemAPI.GetComponentLookup<ChangeDragOnHitByExplosion>(true)
                 }.Schedule(state.Dependency);
                 
@@ -54,6 +55,7 @@ public partial struct ExplodeSystem : ISystem
         [ReadOnly] public ComponentLookup<PhysicsCollider> PhysicsColliderLookup;
         public ComponentLookup<PhysicsDamping> PhysicsDampingLookup;
         [ReadOnly] public ComponentLookup<ChangeDragOnHitByExplosion> ChangeDragOnHitByExplosionLookup;
+        public ComponentLookup<Health> HealthLookup;
         
         [BurstCompile]
         public void Execute()
@@ -93,6 +95,14 @@ public partial struct ExplodeSystem : ISystem
                             {
                                 if(ChangeDragOnHitByExplosionLookup.TryGetComponent(hit.Entity, out var changeDragOnCollision))
                                     dragOfHitEntity.ValueRW.Linear = changeDragOnCollision.NewDrag;
+                            }
+
+                            var healthOfHitEntity = HealthLookup.GetRefRWOptional(hit.Entity, false);
+                            if(healthOfHitEntity.IsValid)
+                            {
+                                var distanceFromExplosion = math.distance(ExplosionPosition, hitBody.WorldFromBody.pos);
+                                var damageMultiplier = distanceFromExplosion / Explosion.Config.Radius;
+                                healthOfHitEntity.ValueRW.Current -= (int) math.round(Explosion.Config.Damage * damageMultiplier);
                             }
                         }
                     }

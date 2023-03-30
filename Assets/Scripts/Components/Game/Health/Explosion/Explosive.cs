@@ -6,6 +6,7 @@ using Unity.Transforms;
 
 public struct ExplosionConfig
 {
+    public int Damage;
     public float Force;
     public float Radius;
     public PhysicsCategoryTags HittablePhysicsTags;

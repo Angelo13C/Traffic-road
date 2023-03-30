@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ExplosiveAuthoring : MonoBehaviour
 {
+	[SerializeField] private int _damage;
     [SerializeField] private float _force;
     [SerializeField] private float _radius;
 	[SerializeField] private PhysicsCategoryTags _hittablePhysicsTags;
@@ -16,6 +17,7 @@ public class ExplosiveAuthoring : MonoBehaviour
 		{
 			var explosive = new Explosive {
 				Config = new ExplosionConfig {
+					Damage = authoring._damage,
 					Force = authoring._force,
 					Radius = authoring._radius,
 					HittablePhysicsTags = authoring._hittablePhysicsTags
