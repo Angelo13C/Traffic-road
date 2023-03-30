@@ -800,7 +800,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2de9295e34b05a4d85a077a53942318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeTime: 0.1
+  _startFadeTime: 0.1
+  _endFadeTime: 0.4
+  _pulseStrength: 0.25
+  _pulseSpeed: 5
+  _endTime: 0.7
+  _endPulseStrength: 0.2
 --- !u!1 &2071861715
 GameObject:
   m_ObjectHideFlags: 0
