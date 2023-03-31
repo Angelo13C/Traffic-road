@@ -696,6 +696,20 @@ MonoBehaviour:
     Category30: 0
     Category31: 0
   _maxTrackedCarsCount: 5
+--- !u!114 &950728412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950728382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc8cf0bfcd180d4098fe01c1406acd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioPlayer: {fileID: 11400000, guid: 839547c4b8cc54249bc560a67c7309f2, type: 2}
+  _footYOffset: 0
 --- !u!1 &1089923867
 GameObject:
   m_ObjectHideFlags: 0
@@ -1568,6 +1582,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 950728408}
+    - targetCorrespondingSourceObject: {fileID: 1555240849038293811, guid: e95be3f6ef9cc8243994bdcda968a0e5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 950728412}
   m_SourcePrefab: {fileID: 100100000, guid: e95be3f6ef9cc8243994bdcda968a0e5, type: 3}
 --- !u!4 &1958040619 stripped
 Transform:
