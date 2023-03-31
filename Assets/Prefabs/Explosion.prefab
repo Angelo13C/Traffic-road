@@ -174,11 +174,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee921733a9ff3746bdfefd341e4004e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clippingDistance: 30
-  _falloffScale: 5
+  _clippingDistance: 15
+  _falloffScale: 15
   _falloffDegree: 2
-  _shakeDuration: 0.8
-  _shakeForce: 300
+  _shakeDuration: 0.7
+  _shakeForce: 10
   _singleShake: 1
 --- !u!2083052967 &2153709743123715593
 VisualEffect:
