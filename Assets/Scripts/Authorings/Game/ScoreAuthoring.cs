@@ -11,7 +11,8 @@ public class ScoreAuthoring : MonoBehaviour
 		public override void Bake(ScoreAuthoring authoring)
 		{
 			var score = new Score {
-				Current = 0
+				Current = 0,
+				DisplayInUI = authoring._displayInUI
 			};
 			AddComponent(score);
 
@@ -19,14 +20,6 @@ public class ScoreAuthoring : MonoBehaviour
 				HighestTileIndex = 0
 			};
 			AddComponent(scoreOnTravel);
-
-			if(authoring._displayInUI)
-			{
-				var scoreUI = new ScoreUI {
-					ScoreLabel = null
-				};
-				AddComponentObject(scoreUI);
-			}
 		}
 	}
 }

@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 public struct Score : IComponentData
 {
     public int Current;
+    public bool DisplayInUI;
 }
 
 public struct ScoreOnTravel : IComponentData

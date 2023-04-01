@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 public struct SuperpowerUser : IComponentData
 {
     public Entity LastUsedSuperpower;
+    public bool DisplayInUI;
 }
 
 public class CurrentSuperpowerUI : IComponentData

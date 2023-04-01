@@ -12,12 +12,10 @@ public class SuperpowersHolderAuthoring : MonoBehaviour
 		{
 			var superpowersUser = new SuperpowerUser
 			{
-				LastUsedSuperpower = Entity.Null
+				LastUsedSuperpower = Entity.Null,
+				DisplayInUI = authoring._showCurrentSuperpowerInUI
 			};
 			AddComponent(superpowersUser);
-
-			if (authoring._showCurrentSuperpowerInUI)
-				AddComponentObject(new CurrentSuperpowerUI());
 			
 			var heldSuperpowers = AddBuffer<HeldSuperpower>();
 			heldSuperpowers.ResizeUninitialized(authoring._initiallyHoldSuperpowers.Length);
