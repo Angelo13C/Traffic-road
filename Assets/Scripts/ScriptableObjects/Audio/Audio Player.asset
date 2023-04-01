@@ -18,19 +18,19 @@ MonoBehaviour:
       Data2: 1177780057
       Data3: 1124010370
       Data4: -1016773153
-    Path: event:/Car/Horn
+    Path: event:/SFX/Car/Horn
   <CarEngineSound>k__BackingField:
     Guid:
       Data1: -972986576
       Data2: 1263659243
       Data3: 804273551
       Data4: -13608939
-    Path: event:/Car/Engine
+    Path: event:/SFX/Car/Engine
   <PlayerFootstep>k__BackingField:
     Guid:
       Data1: 1598464970
       Data2: 1107368293
       Data3: 1498089899
       Data4: -1475418922
-    Path: event:/Player/Footstep
+    Path: event:/SFX/Player/Footstep
   _playerFootstepSurfaceName: Surface
