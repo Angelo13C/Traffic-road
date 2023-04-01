@@ -661,7 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4126cc5af71976c438b6b41211e4d6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 20
+  _radius: 25
   _carBodyTag:
     Category00: 0
     Category01: 1
@@ -695,7 +695,7 @@ MonoBehaviour:
     Category29: 0
     Category30: 0
     Category31: 0
-  _maxTrackedCarsCount: 3
+  _maxTrackedCarsCount: 5
 --- !u!114 &950728412
 MonoBehaviour:
   m_ObjectHideFlags: 0

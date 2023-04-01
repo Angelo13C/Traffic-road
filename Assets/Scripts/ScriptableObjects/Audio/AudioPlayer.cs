@@ -29,7 +29,7 @@ public class AudioPlayer : ScriptableObject
         RuntimeManager.PlayOneShot(audio, audioPosition);
     }
 
-    private EventInstance CreateInstance(EventReference audio)
+    public EventInstance CreateInstance(EventReference audio)
     {
         var eventInstance = RuntimeManager.CreateInstance(audio);
         _eventInstances.Add(eventInstance);
