@@ -8,11 +8,14 @@ public class UISingleton : MonoBehaviour
     {
         get
         {
-            if(_instance == null)
-                _instance = FindObjectOfType<UIDocument>();
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<UISingleton>().GetComponent<UIDocument>();
+            }
             
             return _instance;
         }
     }
+    
     public static T Q<T>(string name) where T : VisualElement => Instance.rootVisualElement.Q<T>(name);
 }
