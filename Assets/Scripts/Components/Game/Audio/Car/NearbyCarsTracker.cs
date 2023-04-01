@@ -9,7 +9,6 @@ public struct NearbyCarsTracker : IComponentData
     public int MaxTrackedCarsCount;
 }
 
-[InternalBufferCapacity(5)]
 public struct NearbyCars : IBufferElementData
 {
     public Entity Entity;
