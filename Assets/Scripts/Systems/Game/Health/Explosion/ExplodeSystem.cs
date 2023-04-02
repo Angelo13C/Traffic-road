@@ -88,7 +88,7 @@ public partial struct ExplodeSystem : ISystem
                             var hitBody = CollisionWorld.Bodies[hit.RigidBodyIndex];
                             hitVelocity.ValueRW.ApplyExplosionForce(hitMass.ValueRO, hitCollider.ValueRO, hitBody.WorldFromBody.pos, 
                                 hitBody.WorldFromBody.rot, hitBody.Scale, Explosion.Config.Force, ExplosionPosition,
-                                Explosion.Config.Radius, FixedDeltaTime, up, collisionFilter, 0, ForceMode.Impulse);
+                                Explosion.Config.Radius, FixedDeltaTime, up, collisionFilter, 1, ForceMode.Impulse);
 
                             var dragOfHitEntity = PhysicsDampingLookup.GetRefRWOptional(hit.Entity, false);
                             if(dragOfHitEntity.IsValid)

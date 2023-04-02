@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 50
-  _force: 10
+  _force: 60000
   _radius: 20
   _hittablePhysicsTags:
     Category00: 0
