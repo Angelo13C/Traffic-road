@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Smoothing: 1
   m_Mass: 1000
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0.4
   m_InitialLinearVelocity:
     x: 0
     y: 0
@@ -481,6 +481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9d2bd89a4696d4cbd19c1ca192522a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 0
   _force: 20000
   _radius: 5
   _hittablePhysicsTags:
@@ -542,13 +543,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d28a1f76a369034584b871ac59de5ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionEvent:
+  _collisionEvent:
     Change: 1
-    NewValue: 10
-  HitByExplosionEvent:
-    Change: 0
-    NewValue: 0
-  BlackHoleEvent:
+    NewValue: 1
+  _hitByExplosionEvent:
+    Change: 1
+    NewValue: 0.3
+  _blackHoleEvent:
     Change: 0
     NewValue: 0
 --- !u!1 &1606757343480156770
